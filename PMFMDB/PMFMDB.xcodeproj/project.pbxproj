@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		342AD11B1C0E74D300DA266A /* PMTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342AD11A1C0E74D300DA266A /* PMTablesViewController.m */; };
 		34F301691C0D1C5F00B6629D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F301681C0D1C5F00B6629D /* main.m */; };
 		34F3016C1C0D1C5F00B6629D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F3016B1C0D1C5F00B6629D /* AppDelegate.m */; };
 		34F3016F1C0D1C5F00B6629D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F3016E1C0D1C5F00B6629D /* ViewController.m */; };
@@ -43,6 +44,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		342AD1181C0DE2DF00DA266A /* PMDataSql.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMDataSql.h; sourceTree = "<group>"; };
+		342AD1191C0E74D300DA266A /* PMTablesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTablesViewController.h; sourceTree = "<group>"; };
+		342AD11A1C0E74D300DA266A /* PMTablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTablesViewController.m; sourceTree = "<group>"; };
 		34F301641C0D1C5F00B6629D /* PMFMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PMFMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34F301681C0D1C5F00B6629D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		34F3016A1C0D1C5F00B6629D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 			children = (
 				34F302411C0D269B00B6629D /* PMDataManager.h */,
 				34F302421C0D269B00B6629D /* PMDataManager.m */,
+				342AD1181C0DE2DF00DA266A /* PMDataSql.h */,
 			);
 			path = PMmanager;
 			sourceTree = "<group>";
@@ -226,6 +231,8 @@
 			children = (
 				34F3023E1C0D200C00B6629D /* PMMainViewController.h */,
 				34F3023F1C0D200C00B6629D /* PMMainViewController.m */,
+				342AD1191C0E74D300DA266A /* PMTablesViewController.h */,
+				342AD11A1C0E74D300DA266A /* PMTablesViewController.m */,
 			);
 			path = PMViewControllers;
 			sourceTree = "<group>";
@@ -374,6 +381,7 @@
 				34F302431C0D269B00B6629D /* PMDataManager.m in Sources */,
 				34F301AB1C0D1D7800B6629D /* FMDatabaseQueue.m in Sources */,
 				34F301691C0D1C5F00B6629D /* main.m in Sources */,
+				342AD11B1C0E74D300DA266A /* PMTablesViewController.m in Sources */,
 				34F301A81C0D1D7800B6629D /* FMDatabase.m in Sources */,
 				34F301AC1C0D1D7800B6629D /* FMResultSet.m in Sources */,
 				34F301A91C0D1D7800B6629D /* FMDatabaseAdditions.m in Sources */,
@@ -600,6 +608,7 @@
 				34F301931C0D1C5F00B6629D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		34F301941C0D1C5F00B6629D /* Build configuration list for PBXNativeTarget "PMFMDBTests" */ = {
 			isa = XCConfigurationList;
@@ -608,6 +617,7 @@
 				34F301961C0D1C5F00B6629D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		34F301971C0D1C5F00B6629D /* Build configuration list for PBXNativeTarget "PMFMDBUITests" */ = {
 			isa = XCConfigurationList;
@@ -616,6 +626,7 @@
 				34F301991C0D1C5F00B6629D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

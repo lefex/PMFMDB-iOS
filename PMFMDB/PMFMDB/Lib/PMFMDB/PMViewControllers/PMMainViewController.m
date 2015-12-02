@@ -7,8 +7,9 @@
 //
 
 #import "PMMainViewController.h"
+#import "PMTablesViewController.h"
 
-static NSString *kCellIdentifier = @"projectSectionIdentifier";
+static NSString *kCellIdentifier = @"mainCellIdentifier";
 
 @interface PMMainViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -33,7 +34,6 @@ static NSString *kCellIdentifier = @"projectSectionIdentifier";
                    @"执行SQL语句"];
     
 }
-
 
 - (void)createUI
 {
@@ -64,6 +64,10 @@ static NSString *kCellIdentifier = @"projectSectionIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        PMTablesViewController *tablesVC = [[PMTablesViewController alloc] init];
+        [self.navigationController pushViewController:tablesVC animated:YES];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

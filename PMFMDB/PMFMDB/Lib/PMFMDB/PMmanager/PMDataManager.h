@@ -10,4 +10,12 @@
 
 @interface PMDataManager : NSObject
 
++ (instancetype)dataBaseWithDbpath:(NSString *)dbpath;
+
+@property (nonatomic, copy, readonly) NSString *dbpath;
+
+- (NSArray *)getAllTables;
+
+- (void)getTableSchema;
+
 @end
