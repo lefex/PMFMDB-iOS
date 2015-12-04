@@ -62,14 +62,16 @@
     return results;
 }
 
-- (void)getTableSchema
+- (NSDictionary *)getTableColumnNamesWithTableName:(NSString *)tableName
 {
-    [_db open];
-    NSDictionary *dict = [[_db getSchema] resultDictionary];
-    NSLog(@"schema=== %@", dict);
-    [_db close];
+    __block NSDictionary *results = [NSDictionary dictionary];
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ LIMIT 1", tableName];
+        FMResultSet *set = [db executeQuery: sql];
+        results = [set columnNameToIndexMap];
+    }];
+    return results;
 }
-
 
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "PMTablesViewController.h"
+#import "PMTableDetailViewController.h"
 #import "PMDataManager.h"
 
 @interface PMTablesViewController ()
@@ -14,6 +15,9 @@
     PMDataManager *_dataManager;
     NSMutableArray *_dataArray;
 }
+
+@property (nonatomic, strong) NSMutableDictionary *heigthCache;
+
 @end
 
 static NSString *kTableCellIdentifier = @"tableCellIdentifier";
@@ -24,21 +28,17 @@ static NSString *kTableCellIdentifier = @"tableCellIdentifier";
 {
     [super viewDidLoad];
     self.title = @"PMTables";
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    self.heigthCache = [NSMutableDictionary dictionary];
     [self loadData];
 }
 
 - (void)loadData
 {
-    _dataManager = [PMDataManager dataBaseWithDbpath:[self messageDBPath]];
+    _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:@"dbpath"]];
     _dataArray = [[_dataManager getAllTables] mutableCopy];
-    [_dataManager getTableSchema];
 }
 
-- (NSString *)messageDBPath
-{
-    return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
-            stringByAppendingPathComponent:@"message.db"];
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -60,7 +60,32 @@ static NSString *kTableCellIdentifier = @"tableCellIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    return [self getHeightWithIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PMTableDetailViewController *tableDetailVC = [[PMTableDetailViewController alloc] init];
+    tableDetailVC.tableName = _dataArray[indexPath.row][@"name"];
+
+    [self.navigationController pushViewController:tableDetailVC animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (CGFloat)getHeightWithIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat rowHeight = 0;
+    NSDictionary *dict = _dataArray[indexPath.row];
+    NSString *tableName = dict[@"name"] ?: @"";
+    NSString *sql = dict[@"sql"] ?: @"";
+    if (self.heigthCache[tableName]) {
+        rowHeight = [self.heigthCache[tableName] floatValue];
+    }else{
+        CGSize rowSize =  [sql sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(CGRectGetWidth(self.view.frame) - 20, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
+        rowHeight = rowSize.height + 20;
+        [self.heigthCache setObject:@(rowHeight) forKey:tableName];
+    }
+    return (rowHeight < 40 ? 44 : rowHeight);
 }
 
 @end

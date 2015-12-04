@@ -10,4 +10,6 @@
 
 @interface PMMainViewController : UIViewController
 
+@property (nonatomic, copy) NSString *dataPath;
+
 @end

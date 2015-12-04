@@ -25,7 +25,15 @@
 {
     [super touchesBegan:touches withEvent:event];
     PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
+    mainViewController.dataPath = [self messageDBPath];
     [self.navigationController pushViewController:mainViewController animated:YES];
 }
+
+- (NSString *)messageDBPath
+{
+    return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
+            stringByAppendingPathComponent:@"message.db"];
+}
+
 
 @end

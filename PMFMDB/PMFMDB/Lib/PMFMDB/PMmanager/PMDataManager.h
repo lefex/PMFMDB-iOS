@@ -16,6 +16,6 @@
 
 - (NSArray *)getAllTables;
 
-- (void)getTableSchema;
+- (NSDictionary *)getTableColumnNamesWithTableName:(NSString *)tableName;
 
 @end

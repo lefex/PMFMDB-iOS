@@ -24,6 +24,7 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"PMFMDB";
+    _tableView.tableFooterView = [[UIView alloc] init];
     [self createUI];
     [self configureMainVCData];
 }
@@ -44,6 +45,13 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
     _tableView.sectionFooterHeight = 0;
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
+}
+
+- (void)setDataPath:(NSString *)dataPath
+{
+    _dataPath = dataPath;
+    [[NSUserDefaults standardUserDefaults] setObject:dataPath forKey:@"dbpath"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
