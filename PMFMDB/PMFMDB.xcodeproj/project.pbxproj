@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		342AD11B1C0E74D300DA266A /* PMTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342AD11A1C0E74D300DA266A /* PMTablesViewController.m */; };
+		34AEE1921C1276110074416E /* PMListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE1911C1276110074416E /* PMListViewCell.m */; };
+		34AEE1951C12AE3F0074416E /* PMCSVManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE1941C12AE3F0074416E /* PMCSVManager.m */; };
 		34E443B51C0F233D00A37B41 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E443B41C0F233D00A37B41 /* CHCSVParser.m */; };
 		34E443BB1C0F2C3F00A37B41 /* PMTableDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E443BA1C0F2C3F00A37B41 /* PMTableDetailViewController.m */; };
 		34E443BE1C0F309100A37B41 /* PMListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E443BD1C0F309100A37B41 /* PMListView.m */; };
@@ -50,6 +52,10 @@
 		342AD1181C0DE2DF00DA266A /* PMDataSql.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMDataSql.h; sourceTree = "<group>"; };
 		342AD1191C0E74D300DA266A /* PMTablesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTablesViewController.h; sourceTree = "<group>"; };
 		342AD11A1C0E74D300DA266A /* PMTablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTablesViewController.m; sourceTree = "<group>"; };
+		34AEE1901C1276110074416E /* PMListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMListViewCell.h; sourceTree = "<group>"; };
+		34AEE1911C1276110074416E /* PMListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMListViewCell.m; sourceTree = "<group>"; };
+		34AEE1931C12AE3F0074416E /* PMCSVManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCSVManager.h; sourceTree = "<group>"; };
+		34AEE1941C12AE3F0074416E /* PMCSVManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCSVManager.m; sourceTree = "<group>"; };
 		34E443B31C0F233D00A37B41 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
 		34E443B41C0F233D00A37B41 /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
 		34E443B91C0F2C3F00A37B41 /* PMTableDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTableDetailViewController.h; sourceTree = "<group>"; };
@@ -234,6 +240,8 @@
 				34F302411C0D269B00B6629D /* PMDataManager.h */,
 				34F302421C0D269B00B6629D /* PMDataManager.m */,
 				342AD1181C0DE2DF00DA266A /* PMDataSql.h */,
+				34AEE1931C12AE3F0074416E /* PMCSVManager.h */,
+				34AEE1941C12AE3F0074416E /* PMCSVManager.m */,
 			);
 			path = PMmanager;
 			sourceTree = "<group>";
@@ -263,6 +271,8 @@
 			children = (
 				34E443BC1C0F309100A37B41 /* PMListView.h */,
 				34E443BD1C0F309100A37B41 /* PMListView.m */,
+				34AEE1901C1276110074416E /* PMListViewCell.h */,
+				34AEE1911C1276110074416E /* PMListViewCell.m */,
 			);
 			path = PMViews;
 			sourceTree = "<group>";
@@ -404,11 +414,13 @@
 				34F302431C0D269B00B6629D /* PMDataManager.m in Sources */,
 				34F301AB1C0D1D7800B6629D /* FMDatabaseQueue.m in Sources */,
 				34F301691C0D1C5F00B6629D /* main.m in Sources */,
+				34AEE1921C1276110074416E /* PMListViewCell.m in Sources */,
 				342AD11B1C0E74D300DA266A /* PMTablesViewController.m in Sources */,
 				34E443B51C0F233D00A37B41 /* CHCSVParser.m in Sources */,
 				34E443BE1C0F309100A37B41 /* PMListView.m in Sources */,
 				34F301A81C0D1D7800B6629D /* FMDatabase.m in Sources */,
 				34F301AC1C0D1D7800B6629D /* FMResultSet.m in Sources */,
+				34AEE1951C12AE3F0074416E /* PMCSVManager.m in Sources */,
 				34F301A91C0D1D7800B6629D /* FMDatabaseAdditions.m in Sources */,
 				34E443BB1C0F2C3F00A37B41 /* PMTableDetailViewController.m in Sources */,
 			);

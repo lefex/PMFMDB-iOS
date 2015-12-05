@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PMTableDetailViewController : UITableViewController
+@interface PMTableDetailViewController : UIViewController
 
 @property (nonatomic, copy) NSString *tableName;
 

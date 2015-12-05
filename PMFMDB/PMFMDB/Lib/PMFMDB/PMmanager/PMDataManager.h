@@ -18,4 +18,8 @@
 
 - (NSDictionary *)getTableColumnNamesWithTableName:(NSString *)tableName;
 
+- (NSArray *)getTableAllValueWithTableName:(NSString *)tableName;
+
+- (NSArray *)getTableValueWithSql:(NSString *)sql;
+
 @end

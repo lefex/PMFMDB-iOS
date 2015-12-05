@@ -73,6 +73,36 @@
     return results;
 }
 
+- (NSArray *)getTableValueWithSql:(NSString *)sql
+{
+    __block NSMutableArray *results = [NSMutableArray array];
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *set = [db executeQuery: sql];
+        while ([set next]) {
+            NSDictionary *tableDict = [set resultDictionary];
+            if (tableDict) {
+                [results addObject:tableDict];
+            }
+        }
+    }];
+    return results;
+}
+
+- (NSArray *)getTableAllValueWithTableName:(NSString *)tableName
+{
+    __block NSMutableArray *results = [NSMutableArray array];
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@", tableName];
+        FMResultSet *set = [db executeQuery: sql];
+        while ([set next]) {
+            NSDictionary *tableDict = [set resultDictionary];
+            if (tableDict) {
+                [results addObject:tableDict];
+            }
+        }
+    }];
+    return results;
+}
 
 
 

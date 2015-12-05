@@ -32,7 +32,9 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
 - (void)configureMainVCData
 {
     _dataArray = @[@"所有的表",
-                   @"执行SQL语句"];
+                   @"执行SQL语句",
+                   @"查询记录"
+                   ];
     
 }
 

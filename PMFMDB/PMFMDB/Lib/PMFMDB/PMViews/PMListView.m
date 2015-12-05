@@ -7,6 +7,8 @@
 //
 
 #import "PMListView.h"
+#import "PMListViewCell.h"
+
 
 @interface PMListView ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -29,8 +31,8 @@
     if (self) {
         self.userInteractionEnabled = YES;
         oldFrame = frame;
-        topViewHeigth = CGRectGetHeight(frame);
-        listWidth =  CGRectGetWidth(frame);
+        topViewHeigth = frame.size.height;
+        listWidth =  frame.size.width;
         _dataArray = [NSMutableArray array];
         _rowHeight = 30;
         [self createUI];
@@ -74,29 +76,27 @@
 - (void)showInView:(UIView *)showView
 {
     _showView = showView;
+    [_showView addSubview:_tableView];
 }
 
 - (void)hidenListView
 {
     isShow = NO;
     [UIView animateWithDuration:0.3 animations:^{
-       _tableView.frame = CGRectMake(0, topViewHeigth, listWidth, 0);
+       _tableView.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y + topViewHeigth, listWidth, 0);
     } completion:^(BOOL finished) {
-        self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, listWidth, topViewHeigth);
-        NSLog(@"hiden %@", NSStringFromCGRect(self.frame));
     }];
 }
 
 - (void)showListView
 {
     isShow = YES;
-    self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, listWidth,  [self getListViewHeight] + topViewHeigth);
-    NSLog(@"show %@", NSStringFromCGRect(self.frame));
-    
     [UIView animateWithDuration:0.2 animations:^{
-        _tableView.frame = CGRectMake(0, topViewHeigth, listWidth, [self getListViewHeight]);
+        _tableView.frame = CGRectMake(oldFrame.origin.x, topViewHeigth, listWidth, [self getListViewHeight]);
     } completion:^(BOOL finished) {
-        
+        if (finished) {
+            [_tableView reloadData];
+        }
     }];
 
 }
@@ -111,14 +111,12 @@
 
 - (void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeigth, listWidth, 0) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(oldFrame.origin.x, topViewHeigth, listWidth, 0) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.sectionFooterHeight = 0;
-    _tableView.tableFooterView = [[UIView alloc] init];
     _tableView.rowHeight = self.rowHeight;
+    _tableView.tableFooterView = [[UIView alloc] init];
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"listCell"];
-    [self addSubview:_tableView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -133,16 +131,25 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
     }
     cell.textLabel.text = _dataArray[indexPath.row];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont systemFontOfSize:12];
-    cell.textLabel.textAlignment = NSTextAlignmentCenter;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row < [_dataArray count]) {
+        NSString *title = _dataArray[indexPath.row];
+        [self hidenListView];
+        self.topTitle = title;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(listViewDidSelectIndexTitle:)]) {
+            [self.delegate listViewDidSelectIndexTitle:title];
+        }
+    }
 }
 
 @end

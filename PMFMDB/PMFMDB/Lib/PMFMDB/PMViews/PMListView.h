@@ -21,5 +21,6 @@
 @property (nonatomic, assign) id<PMListViewDelegate> delegate;
 @property (nonatomic, copy) NSString *topTitle;
 
+- (void)showInView:(UIView *)showView;
 
 @end
