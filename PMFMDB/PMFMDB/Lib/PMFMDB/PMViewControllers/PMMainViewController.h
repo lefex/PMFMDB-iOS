@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PMMainViewController : UIViewController
+@interface PMMainViewController : UITableViewController
 
 @property (nonatomic, copy) NSString *dataPath;
 

@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class PMListView;
+
 @protocol PMListViewDelegate <NSObject>
 
 - (void)listViewDidSelectIndexTitle:(NSString *)text;
+- (void)listViewWillClickTopView:(PMListView *)listView;
 
 @end
 

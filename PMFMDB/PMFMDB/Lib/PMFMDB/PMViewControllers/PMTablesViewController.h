@@ -10,4 +10,8 @@
 
 @interface PMTablesViewController : UITableViewController
 
+@property (nonatomic, copy) void(^completeCB)(NSString *tableName);
+
+@property (nonatomic, assign) BOOL isSelectedTable;
+
 @end

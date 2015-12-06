@@ -27,7 +27,6 @@ static NSString *kTableCellIdentifier = @"tableCellIdentifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"PMTables";
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.heigthCache = [NSMutableDictionary dictionary];
     [self loadData];
@@ -65,10 +64,15 @@ static NSString *kTableCellIdentifier = @"tableCellIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PMTableDetailViewController *tableDetailVC = [[PMTableDetailViewController alloc] init];
-    tableDetailVC.tableName = _dataArray[indexPath.row][@"name"];
+    if (self.isSelectedTable) {
+        self.completeCB ? self.completeCB(_dataArray[indexPath.row][@"name"]) : nil;
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        PMTableDetailViewController *tableDetailVC = [[PMTableDetailViewController alloc] init];
+        tableDetailVC.tableName = _dataArray[indexPath.row][@"name"];
+        [self.navigationController pushViewController:tableDetailVC animated:YES];
+    }
 
-    [self.navigationController pushViewController:tableDetailVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

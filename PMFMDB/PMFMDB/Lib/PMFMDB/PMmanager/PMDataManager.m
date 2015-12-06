@@ -41,6 +41,7 @@
             _dbpath = dbpath;
             _db = [FMDatabase databaseWithPath:dbpath];
             _dbQueue = [FMDatabaseQueue databaseQueueWithPath: dbpath];
+            [self createMessageDB];
 
         }
     }
@@ -88,6 +89,20 @@
     return results;
 }
 
+- (NSError *)executeWithSql:(NSString *)sql
+{
+    __block NSError *error;
+    __block BOOL isSuccess;
+    [_dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+      isSuccess = [db executeUpdate:sql withErrorAndBindings:&error];
+    }];
+    if (isSuccess) {
+        return nil;
+    }
+    return error;
+
+}
+
 - (NSArray *)getTableAllValueWithTableName:(NSString *)tableName
 {
     __block NSMutableArray *results = [NSMutableArray array];
@@ -120,8 +135,10 @@
     
     NSString *createIndex = @"create index messageIndex on messageTable(mesMainKeyId)";
     
-    BOOL result = [messageDB executeUpdate:createStr];
-    [messageDB executeUpdate:createIndex];
+    NSString *insertSql = @"insert into messageTable(mesChatId, mesChatTo, mesChatTime, mesChatKey, mesFrom, mesTo , mesType ,mesBody, mesIsSend, mesChatSubject, mesBadge,mesMessageId,mesIsSuccessSend) values ('123333', 'wsy','15-3-4', '323', 'bx', 'text', 'wee', '1', 'subject', '3', '32222','1', '3223')";
+    
+    BOOL result = [messageDB executeUpdate:insertSql];
+//    [messageDB executeUpdate:createIndex];
     
     [messageDB close];
     if (!result) {

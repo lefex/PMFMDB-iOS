@@ -7,7 +7,6 @@
 //
 
 #import "PMListView.h"
-#import "PMListViewCell.h"
 
 
 @interface PMListView ()<UITableViewDataSource, UITableViewDelegate>
@@ -65,12 +64,12 @@
 
 - (void)buttonClick
 {
-    if (isShow) {
-        [self hidenListView];
-    }else{
-        [self showListView];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(listViewWillClickTopView:)]) {
+        [self.delegate listViewWillClickTopView:self];
     }
-    [_tableView reloadData];
+    
+    isShow = !isShow;
+    [self isShowListView:isShow];
 }
 
 - (void)showInView:(UIView *)showView
@@ -79,20 +78,10 @@
     [_showView addSubview:_tableView];
 }
 
-- (void)hidenListView
+- (void)isShowListView:(BOOL)show
 {
-    isShow = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-       _tableView.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y + topViewHeigth, listWidth, 0);
-    } completion:^(BOOL finished) {
-    }];
-}
-
-- (void)showListView
-{
-    isShow = YES;
     [UIView animateWithDuration:0.2 animations:^{
-        _tableView.frame = CGRectMake(oldFrame.origin.x, topViewHeigth, listWidth, [self getListViewHeight]);
+        _tableView.frame = CGRectMake(oldFrame.origin.x, show ? topViewHeigth : oldFrame.origin.y, listWidth, show ? [self getListViewHeight] : 0);
     } completion:^(BOOL finished) {
         if (finished) {
             [_tableView reloadData];
@@ -144,7 +133,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row < [_dataArray count]) {
         NSString *title = _dataArray[indexPath.row];
-        [self hidenListView];
+        [self isShowListView:NO];
         self.topTitle = title;
         if (self.delegate && [self.delegate respondsToSelector:@selector(listViewDidSelectIndexTitle:)]) {
             [self.delegate listViewDidSelectIndexTitle:title];

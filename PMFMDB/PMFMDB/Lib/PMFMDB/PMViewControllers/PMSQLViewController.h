@@ -1,5 +1,5 @@
 //
-//  PMListViewCell.h
+//  PMSQLViewController.h
 //  PMFMDB
 //
 //  Created by wsy on 15/12/5.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PMListViewCell : UITableViewCell
-
-@property (nonatomic, copy) NSString *titleText;
+@interface PMSQLViewController : UIViewController
 
 @end

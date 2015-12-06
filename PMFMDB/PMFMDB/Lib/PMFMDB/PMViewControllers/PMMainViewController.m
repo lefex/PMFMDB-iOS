@@ -8,14 +8,17 @@
 
 #import "PMMainViewController.h"
 #import "PMTablesViewController.h"
+#import "PMCSVFileViewController.h"
+#import "PMSQLViewController.h"
 
 static NSString *kCellIdentifier = @"mainCellIdentifier";
 
-@interface PMMainViewController ()<UITableViewDataSource,UITableViewDelegate>
-{
-    UITableView *_tableView;
-    NSArray *_dataArray;
-}
+@interface PMMainViewController ()
+
+@property (nonatomic, strong) NSMutableArray *titles;
+@property (nonatomic, strong) NSMutableArray *classNames;
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSArray *dataDescriptions;
 
 @end
 
@@ -24,29 +27,31 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"PMFMDB";
-    _tableView.tableFooterView = [[UIView alloc] init];
-    [self createUI];
+    self.titles = @[].mutableCopy;
+    self.classNames = @[].mutableCopy;
+
+    self.tableView.tableFooterView = [[UIView alloc] init];
     [self configureMainVCData];
+}
+
+- (void)addTitle:(NSString *)title className:(NSString *)name
+{
+    [self.titles addObject:title];
+    [self.classNames addObject:name];
 }
 
 - (void)configureMainVCData
 {
-    _dataArray = @[@"所有的表",
-                   @"执行SQL语句",
-                   @"查询记录"
-                   ];
+    [self addTitle:@"PMTables" className:@"PMTablesViewController"];
+    [self addTitle:@"PMSQL" className:@"PMSQLViewController"];
+    [self addTitle:@"PMCSV" className:@"PMCSVFileViewController"];
     
-}
-
-- (void)createUI
-{
-    _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-    _tableView.showsVerticalScrollIndicator = NO;
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.sectionFooterHeight = 0;
-    _tableView.tableFooterView = [[UIView alloc] init];
-    [self.view addSubview:_tableView];
+    _dataArray = @[@"All tables",
+                   @"Execute SQL",
+                   @"The recodes that you searched"
+                   ];
+    _dataDescriptions = @[@"All the tables that in you database", @"You can execute SQL in your database what you like", @"The recodes that you have searched."];
+    
 }
 
 - (void)setDataPath:(NSString *)dataPath
@@ -66,17 +71,21 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
     }
     cell.textLabel.text = _dataArray[indexPath.row];
+    cell.detailTextLabel.text = _dataDescriptions[indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        PMTablesViewController *tablesVC = [[PMTablesViewController alloc] init];
-        [self.navigationController pushViewController:tablesVC animated:YES];
+    NSString *className = self.classNames[indexPath.row];
+    if (className) {
+        Class class = NSClassFromString(className);
+        UIViewController *vc = class.new;
+        vc.title = _titles[indexPath.row];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

@@ -12,7 +12,7 @@
 #import "PMDataManager.h"
 #import "PMCSVManager.h"
 
-@interface PMTableDetailViewController ()<QLPreviewControllerDataSource,QLPreviewControllerDelegate>
+@interface PMTableDetailViewController ()<QLPreviewControllerDataSource,QLPreviewControllerDelegate, PMListViewDelegate>
 {
     PMListView *_columnNameView;
     PMListView *_conditionListView;
@@ -20,6 +20,8 @@
     
     PMCSVManager *allCSVManager;
     PMCSVManager *partCSVManager;
+    
+    NSString *_filePath;
     
     PMDataManager *_dataManager;
 }
@@ -46,8 +48,20 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
 - (void)searchAllData
 {
     NSArray *datas = [_dataManager getTableAllValueWithTableName:_tableName];
+    if (!datas.count) {
+        [self alertNoData];
+        return;
+    }
     NSLog(@"datas = %@", datas);
     allCSVManager = [[PMCSVManager alloc] initData:datas];
+    _filePath = allCSVManager.filePath;
+    [self createPreview];
+}
+
+- (void)alertNoData
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"There is No data" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
 }
 
 - (void)searchPartDataAction
@@ -73,14 +87,18 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
     
     NSString *sql = [NSString stringWithFormat:@"SELECT *FROM %@ WHERE %@ %@ %@", _tableName, _columnNameView.topTitle, _conditionListView.topTitle, _valueTextField.text];
     NSArray *datas = [_dataManager getTableValueWithSql:sql];
+    if (!datas.count) {
+        [self alertNoData];
+        return;
+    }
     NSLog(@"datas = %@", datas);
 
     partCSVManager = [[PMCSVManager alloc] initData:datas];
+    _filePath = partCSVManager.filePath;
+    [self createPreview];
 }
 
 #pragma mark - delegate
-
-
 // 控制文件预览时显示视图控制器的个数
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller
 {
@@ -89,8 +107,18 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
 
 - (id<QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index
 {
-    NSURL *fileUrl = nil;
+    NSURL *fileUrl;
+    if (_filePath) {
+        fileUrl = [NSURL fileURLWithPath:_filePath];
+    }
     return fileUrl;
+}
+
+#pragma mark - PMListViewDelegate
+- (void)listViewWillClickTopView:(PMListView *)listView
+{
+    [_qlPreviewViewController.view removeFromSuperview];
+    _qlPreviewViewController = nil;
 }
 
 #pragma mark - createView
@@ -108,11 +136,13 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
     _columnNameView.topTitle = @"列名";
     [_columnNameView showInView:self.view];
     [_columnNameView.dataArray addObjectsFromArray:[columnDict allKeys]];
+    _columnNameView.delegate = self;
     [bgView addSubview:_columnNameView];
     
     _conditionListView = [[PMListView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_columnNameView.frame), 0, width-20 , height)];
     _conditionListView.topTitle = @"条件";
     [_conditionListView.dataArray addObjectsFromArray:@[@">", @"<", @"=", @">=", @"<=", @"!=", @"like"]];
+    _conditionListView.delegate = self;
     [_conditionListView showInView:self.view];
     [bgView addSubview:_conditionListView];
     
@@ -148,12 +178,15 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
 
 - (void)createPreview
 {
-    _qlPreviewViewController = [[QLPreviewController alloc] init];
-    _qlPreviewViewController.dataSource = self;
-    _qlPreviewViewController.delegate = self;
-    _qlPreviewViewController.hidesBottomBarWhenPushed = YES;
-    _qlPreviewViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
-    [self.view addSubview:_qlPreviewViewController.view];
+    if (!_qlPreviewViewController) {
+        _qlPreviewViewController = [[QLPreviewController alloc] init];
+        _qlPreviewViewController.dataSource = self;
+        _qlPreviewViewController.delegate = self;
+        _qlPreviewViewController.hidesBottomBarWhenPushed = YES;
+        _qlPreviewViewController.view.frame = CGRectMake(0, 64+44, self.view.frame.size.width, self.view.frame.size.height-44-64);
+        [self.view addSubview:_qlPreviewViewController.view];
+    }
+    [_qlPreviewViewController reloadData];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

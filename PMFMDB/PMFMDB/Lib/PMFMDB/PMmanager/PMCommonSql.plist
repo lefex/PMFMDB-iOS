@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>SELECT9</key>
+    <string>SELECT cloumnName..., sum(cloumnName) as total FROM tableName GROUP BY cloumnName</string>
+    <key>SELECT8</key>
+    <string>SELECT *FROM tableName WHERE cloumnName LIKE ‘_s%'</string>
+    <key>SELECT7</key>
+    <string>SELECT *FROM tableName LIMIT 2 OFFSET 2</string>
+    <key>SELECT6</key>
+    <string>SELECT *FROM tableNameA INNER JOIN tableNameB ON tableNameA.columnName = tableNameB.columnName</string>
+    <key>SELECT5</key>
+    <string>SELECT DISTINCT columnName FROM tableName</string>
+    <key>SELECT4</key>
+    <string>SELECT COUNT (*) AS 'count' FROM tableName WHERE columnName=?</string>
+	<key>SELECT3</key>
+	<string>SELECT A.columnName, B.columnName,  FROM tableName AS A LEFT JOIN tableName AS B ON A.columnName=B.columnName WHERE A.clientId=?</string>
+	<key>SELECT2</key>
+	<string>SELECT *FROM tableName WHERE con1 AND con2</string>
+	<key>SELECT1</key>
+	<string>SELECT *FROM tableName WHERE con1 AND con2 ORDER BY cloumnName</string>
+	<key>SELECT</key>
+	<string>SELECT *FROM tableName</string>
+</dict>
+</plist>

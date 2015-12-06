@@ -22,4 +22,6 @@
 
 - (NSArray *)getTableValueWithSql:(NSString *)sql;
 
+- (NSError *)executeWithSql:(NSString *)sql;
+
 @end

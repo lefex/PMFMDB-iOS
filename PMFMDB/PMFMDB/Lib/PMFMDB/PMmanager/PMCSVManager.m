@@ -23,11 +23,18 @@
     self = [super init];
     if (self) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateStyle = NSDateFormatterLongStyle;
+        formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
         NSString *dateStr = [formatter stringFromDate:[NSDate date]];
         _dataArray = [data copy];
-        _filePath = [[self csvRootPath] stringByAppendingPathComponent:dateStr];
+        NSString *rootPath = [self csvRootPath];
+        NSError *error;
+        [[NSFileManager defaultManager] createDirectoryAtPath:rootPath withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) {
+            NSLog(@"create csv file error %@", error.localizedDescription);
+        }
+        _filePath = [[[self csvRootPath] stringByAppendingPathComponent:dateStr] stringByAppendingPathExtension:@"csv"];
         _csvWrite = [[CHCSVWriter alloc] initForWritingToCSVFile: _filePath];
+        [self writeToFile];
     }
     return self;
 }
@@ -51,6 +58,7 @@
         }
         [_csvWrite finishLine];
     }
+    
 }
 
 - (NSString *)csvRootPath
@@ -58,6 +66,7 @@
     return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
             stringByAppendingPathComponent:@"pmcsv"];
 }
+
 
 
 
