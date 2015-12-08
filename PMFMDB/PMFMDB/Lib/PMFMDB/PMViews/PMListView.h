@@ -12,6 +12,7 @@
 
 @protocol PMListViewDelegate <NSObject>
 
+@optional
 - (void)listViewDidSelectIndexTitle:(NSString *)text;
 - (void)listViewWillClickTopView:(PMListView *)listView;
 

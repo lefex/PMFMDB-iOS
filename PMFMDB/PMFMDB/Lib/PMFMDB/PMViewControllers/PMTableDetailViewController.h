@@ -6,6 +6,8 @@
 //  Copyright © 2015年 WSY. All rights reserved.
 //
 
+// Table detail view controller
+
 #import <UIKit/UIKit.h>
 
 @interface PMTableDetailViewController : UIViewController

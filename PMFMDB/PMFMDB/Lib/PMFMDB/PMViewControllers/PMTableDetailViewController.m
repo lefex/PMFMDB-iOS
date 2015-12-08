@@ -8,11 +8,13 @@
 
 #import <QuickLook/QuickLook.h>
 #import "PMTableDetailViewController.h"
+#import "PMFilePreviewViewController.h"
 #import "PMListView.h"
 #import "PMDataManager.h"
 #import "PMCSVManager.h"
+#import "PMConfigure.h"
 
-@interface PMTableDetailViewController ()<QLPreviewControllerDataSource,QLPreviewControllerDelegate, PMListViewDelegate>
+@interface PMTableDetailViewController ()<PMListViewDelegate>
 {
     PMListView *_columnNameView;
     PMListView *_conditionListView;
@@ -27,11 +29,10 @@
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
-@property (nonatomic, strong) QLPreviewController *qlPreviewViewController;
+@property (nonatomic, strong) PMFilePreviewViewController *filePreviewController;
 
 @end
 
-static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
 
 @implementation PMTableDetailViewController
 
@@ -39,13 +40,13 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = _tableName;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchAllData)];
-    _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:@"dbpath"]];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(_searchAllData)];
+    _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
     [self createHeaderView];
 }
 
 #pragma mark - action
-- (void)searchAllData
+- (void)_searchAllData
 {
     NSArray *datas = [_dataManager getTableAllValueWithTableName:_tableName];
     if (!datas.count) {
@@ -59,13 +60,19 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
 }
 
 - (void)alertNoData
-{
+{    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"There is No data" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
+#pragma clang diagnostic pop
+
 }
 
-- (void)searchPartDataAction
+- (void)_searchPartDataAction
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if (_columnNameView.topTitle.length == 0  || [_columnNameView.topTitle isEqualToString:@"列名"]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Please select column name!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
@@ -84,6 +91,7 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
         [_valueTextField becomeFirstResponder];
         return;
     }
+#pragma clang diagnostic pop
     
     NSString *sql = [NSString stringWithFormat:@"SELECT *FROM %@ WHERE %@ %@ %@", _tableName, _columnNameView.topTitle, _conditionListView.topTitle, _valueTextField.text];
     NSArray *datas = [_dataManager getTableValueWithSql:sql];
@@ -98,27 +106,11 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
     [self createPreview];
 }
 
-#pragma mark - delegate
-// 控制文件预览时显示视图控制器的个数
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller
-{
-    return 1;
-}
-
-- (id<QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index
-{
-    NSURL *fileUrl;
-    if (_filePath) {
-        fileUrl = [NSURL fileURLWithPath:_filePath];
-    }
-    return fileUrl;
-}
-
 #pragma mark - PMListViewDelegate
 - (void)listViewWillClickTopView:(PMListView *)listView
 {
-    [_qlPreviewViewController.view removeFromSuperview];
-    _qlPreviewViewController = nil;
+    [_filePreviewController.qlPreviewViewController.view removeFromSuperview];
+    _filePreviewController = nil;
 }
 
 #pragma mark - createView
@@ -157,7 +149,7 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
     searchButton.frame = CGRectMake(CGRectGetMaxX(_valueTextField.frame)+2, 0, width-22, height);
     [searchButton setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
     searchButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [searchButton addTarget:self action:@selector(searchPartDataAction) forControlEvents:UIControlEventTouchUpInside];
+    [searchButton addTarget:self action:@selector(_searchPartDataAction) forControlEvents:UIControlEventTouchUpInside];
     [searchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [bgView addSubview:searchButton];
     
@@ -178,25 +170,18 @@ static NSString *kTableDetailCellIdentifier = @"tableDetailCellIdentifier";
 
 - (void)createPreview
 {
-    if (!_qlPreviewViewController) {
-        _qlPreviewViewController = [[QLPreviewController alloc] init];
-        _qlPreviewViewController.dataSource = self;
-        _qlPreviewViewController.delegate = self;
-        _qlPreviewViewController.hidesBottomBarWhenPushed = YES;
-        _qlPreviewViewController.view.frame = CGRectMake(0, 64+44, self.view.frame.size.width, self.view.frame.size.height-44-64);
-        [self.view addSubview:_qlPreviewViewController.view];
+    if (!_filePreviewController) {
+        _filePreviewController = [[PMFilePreviewViewController alloc] initWithFilePath:_filePath];
+        _filePreviewController.qlPreviewViewController.view.frame = CGRectMake(0, 64+44, self.view.frame.size.width, self.view.frame.size.height-44-64);
+        [self.view addSubview:_filePreviewController.qlPreviewViewController.view];
     }
-    [_qlPreviewViewController reloadData];
+    _filePreviewController.filePath = _filePath;
+    [_filePreviewController reloadData];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-}
-
-- (void)dealloc
-{
-    NSLog(@"%@", NSStringFromClass([self class]));
 }
 
 @end

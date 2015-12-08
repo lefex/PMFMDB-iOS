@@ -10,8 +10,7 @@
 #import "PMTablesViewController.h"
 #import "PMCSVFileViewController.h"
 #import "PMSQLViewController.h"
-
-static NSString *kCellIdentifier = @"mainCellIdentifier";
+#import "PMConfigure.h"
 
 @interface PMMainViewController ()
 
@@ -31,20 +30,20 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
     self.classNames = @[].mutableCopy;
 
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [self configureMainVCData];
+    [self _configureMainVCData];
 }
 
-- (void)addTitle:(NSString *)title className:(NSString *)name
+- (void)_addTitle:(NSString *)title className:(NSString *)name
 {
     [self.titles addObject:title];
     [self.classNames addObject:name];
 }
 
-- (void)configureMainVCData
+- (void)_configureMainVCData
 {
-    [self addTitle:@"PMTables" className:@"PMTablesViewController"];
-    [self addTitle:@"PMSQL" className:@"PMSQLViewController"];
-    [self addTitle:@"PMCSV" className:@"PMCSVFileViewController"];
+    [self _addTitle:@"PMTables" className:@"PMTablesViewController"];
+    [self _addTitle:@"PMSQL" className:@"PMSQLViewController"];
+    [self _addTitle:@"PMCSV" className:@"PMCSVFileViewController"];
     
     _dataArray = @[@"All tables",
                    @"Execute SQL",
@@ -57,7 +56,7 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
 - (void)setDataPath:(NSString *)dataPath
 {
     _dataPath = dataPath;
-    [[NSUserDefaults standardUserDefaults] setObject:dataPath forKey:@"dbpath"];
+    [[NSUserDefaults standardUserDefaults] setObject:dataPath forKey:kPMDbpathKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -69,6 +68,7 @@ static NSString *kCellIdentifier = @"mainCellIdentifier";
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString *kCellIdentifier = @"mainCellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];

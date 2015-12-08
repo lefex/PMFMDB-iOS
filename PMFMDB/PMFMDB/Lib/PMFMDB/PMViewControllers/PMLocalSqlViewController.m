@@ -93,8 +93,11 @@ static NSString *kTableCellIdentifier = @"localSqlCellIdentifier";
     if (self.heigthCache[sqlKey]) {
         rowHeight = [self.heigthCache[sqlKey] floatValue];
     }else{
-        CGSize rowSize =  [sql sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(CGRectGetWidth(self.view.frame) - 40, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+        CGSize rowSize =  [sql sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(CGRectGetWidth(self.view.frame) - 20, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
         rowHeight = rowSize.height + 20;
+#pragma clang diagnostic pop
         [self.heigthCache setObject:@(rowHeight) forKey:sqlKey];
     }
     return (rowHeight < 40 ? 44 : rowHeight);

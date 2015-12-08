@@ -71,8 +71,11 @@
 - (void)runSqlAction
 {
     if (_textView.text.length == 0) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Please input your sql!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
+#pragma clang diagnostic pop
         return;
     }
     PMDataManager *dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:@"dbpath"]];
@@ -87,11 +90,13 @@
             _textView.text = @"Execute success";
         }
     }else{
-        datas = [dataManager getTableValueWithSql:_textView.text];
+        NSDictionary *dataDict = [dataManager getWithSql:_textView.text];
+        datas = dataDict[@"data"];
+        NSString *errorMessage = dataDict[@"isSuccess"];
         if (datas.count) {
             _textView.text = datas.debugDescription;
         }else{
-            
+            _textView.text = errorMessage;
         }
 
     }

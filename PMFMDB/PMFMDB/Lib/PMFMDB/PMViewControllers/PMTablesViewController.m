@@ -9,6 +9,8 @@
 #import "PMTablesViewController.h"
 #import "PMTableDetailViewController.h"
 #import "PMDataManager.h"
+#import "PMHelper.h"
+#import "PMConfigure.h"
 
 @interface PMTablesViewController ()
 {
@@ -20,7 +22,6 @@
 
 @end
 
-static NSString *kTableCellIdentifier = @"tableCellIdentifier";
 
 @implementation PMTablesViewController
 
@@ -29,12 +30,12 @@ static NSString *kTableCellIdentifier = @"tableCellIdentifier";
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.heigthCache = [NSMutableDictionary dictionary];
-    [self loadData];
+    [self _loadData];
 }
 
-- (void)loadData
+- (void)_loadData
 {
-    _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:@"dbpath"]];
+    _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
     _dataArray = [[_dataManager getAllTables] mutableCopy];
 }
 
@@ -46,6 +47,7 @@ static NSString *kTableCellIdentifier = @"tableCellIdentifier";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString *kTableCellIdentifier = @"tableCellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTableCellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kTableCellIdentifier];
@@ -82,14 +84,15 @@ static NSString *kTableCellIdentifier = @"tableCellIdentifier";
     NSDictionary *dict = _dataArray[indexPath.row];
     NSString *tableName = dict[@"name"] ?: @"";
     NSString *sql = dict[@"sql"] ?: @"";
+    if (tableName.length == 0 || sql.length == 0) return 44;
+    
     if (self.heigthCache[tableName]) {
         rowHeight = [self.heigthCache[tableName] floatValue];
     }else{
-        CGSize rowSize =  [sql sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(CGRectGetWidth(self.view.frame) - 20, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
-        rowHeight = rowSize.height + 20;
+        rowHeight = [PMHelper pmGetTextHeightWithText:sql width:CGRectGetWidth(self.view.frame) - 20];
         [self.heigthCache setObject:@(rowHeight) forKey:tableName];
     }
-    return (rowHeight < 40 ? 44 : rowHeight);
+    return (rowHeight < 44 ? 44 : rowHeight);
 }
 
 @end
