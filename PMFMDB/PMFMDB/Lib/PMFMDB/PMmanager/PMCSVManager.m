@@ -8,6 +8,7 @@
 
 #import "PMCSVManager.h"
 #import "CHCSVParser.h"
+#import "PMConfigure.h"
 
 @interface PMCSVManager ()
 {
@@ -45,13 +46,14 @@
         return;
     }
     
-    // 写列名
+    
+    // write cloumn name
     for (NSString *columnName in [[_dataArray firstObject] allKeys]) {
         [_csvWrite writeField:columnName];
     }
     [_csvWrite finishLine];
     
-    // 写数据
+    // write data
     for (NSDictionary *dataDict in _dataArray) {
         for (NSString *columnValue in [dataDict allValues]) {
             [_csvWrite writeField:columnValue];
@@ -64,10 +66,7 @@
 - (NSString *)csvRootPath
 {
     return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
-            stringByAppendingPathComponent:@"pmcsv"];
+            stringByAppendingPathComponent: kPMCSVFileRootPathName];
 }
-
-
-
 
 @end

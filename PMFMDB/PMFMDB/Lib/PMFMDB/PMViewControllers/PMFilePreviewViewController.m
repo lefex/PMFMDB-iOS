@@ -25,6 +25,12 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title = @"PMPreview";
+}
+
 - (void)_createPreviewViewController
 {
     if (!_qlPreviewViewController) {
@@ -32,6 +38,9 @@
         _qlPreviewViewController.dataSource = self;
         _qlPreviewViewController.delegate = self;
         _qlPreviewViewController.hidesBottomBarWhenPushed = YES;
+        _qlPreviewViewController.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+        self.view.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_qlPreviewViewController.view];
     }
 }
 

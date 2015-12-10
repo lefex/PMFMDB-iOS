@@ -7,10 +7,12 @@
 //
 
 #import "PMSQLViewController.h"
-#import "PMLinkView.h"
 #import "PMLocalSqlViewController.h"
 #import "PMTablesViewController.h"
+#import "PMFilePreviewViewController.h"
+#import "PMLinkView.h"
 #import "PMDataManager.h"
+#import "PMCSVManager.h"
 
 @interface PMSQLViewController ()<PMLinkViewDelegate>
 
@@ -94,7 +96,9 @@
         datas = dataDict[@"data"];
         NSString *errorMessage = dataDict[@"isSuccess"];
         if (datas.count) {
-            _textView.text = datas.debugDescription;
+            PMCSVManager *csvManager = [[PMCSVManager alloc] initData:datas];
+            PMFilePreviewViewController *previewVC = [[PMFilePreviewViewController alloc] initWithFilePath:csvManager.filePath];
+            [self.navigationController pushViewController:previewVC animated:YES];
         }else{
             _textView.text = errorMessage;
         }

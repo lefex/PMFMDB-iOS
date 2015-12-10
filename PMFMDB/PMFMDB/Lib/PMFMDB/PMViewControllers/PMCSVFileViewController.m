@@ -7,15 +7,14 @@
 //
 
 #import "PMCSVFileViewController.h"
-#import <QuickLook/QuickLook.h>
+#import "PMFilePreviewViewController.h"
+#import "PMConfigure.h"
 
 
-@interface PMCSVFileViewController ()<QLPreviewControllerDataSource,QLPreviewControllerDelegate>
+@interface PMCSVFileViewController ()
 {
     NSMutableArray *_dataArray;
-    NSIndexPath *_indexPath;
 }
-@property (nonatomic, strong) QLPreviewController *qlPreviewViewController;
 @end
 
 static NSString *kTableCellIdentifier = @"csvCellIdentifier";
@@ -49,7 +48,7 @@ static NSString *kTableCellIdentifier = @"csvCellIdentifier";
 - (NSString *)csvRootPath
 {
     return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
-            stringByAppendingPathComponent:@"pmcsv"];
+            stringByAppendingPathComponent:kPMCSVFileRootPathName];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -70,8 +69,9 @@ static NSString *kTableCellIdentifier = @"csvCellIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    _indexPath = indexPath;
-    [self createPreview];
+    NSString *filePath = [[self csvRootPath] stringByAppendingPathComponent:_dataArray[indexPath.row] ?: @""];
+    PMFilePreviewViewController *previewVC = [[PMFilePreviewViewController alloc] initWithFilePath:filePath];
+    [self.navigationController pushViewController:previewVC animated:YES];
 }
 
 - (UITableViewCellEditingStyle )tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,31 +92,6 @@ static NSString *kTableCellIdentifier = @"csvCellIdentifier";
         }
     }
 }
-
-- (void)createPreview
-{
-    _qlPreviewViewController = [[QLPreviewController alloc] init];
-    _qlPreviewViewController.dataSource = self;
-    _qlPreviewViewController.delegate = self;
-    _qlPreviewViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:_qlPreviewViewController animated:YES];
-}
-
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller
-{
-    return 1;
-}
-
-- (id<QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index
-{
-    NSURL *fileUrl;
-    if (_indexPath.row < [_dataArray count]) {
-        fileUrl = [NSURL fileURLWithPath:[[self csvRootPath] stringByAppendingPathComponent:_dataArray[_indexPath.row] ?: @""]];
-    }
-    return fileUrl;
-
-}
-
 
 
 @end

@@ -8,6 +8,7 @@
 
 #import "PMLocalSqlViewController.h"
 #import "PMDataManager.h"
+#import "PMHelper.h"
 
 @interface PMLocalSqlViewController ()
 {
@@ -93,11 +94,7 @@ static NSString *kTableCellIdentifier = @"localSqlCellIdentifier";
     if (self.heigthCache[sqlKey]) {
         rowHeight = [self.heigthCache[sqlKey] floatValue];
     }else{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored"-Wdeprecated-declarations"
-        CGSize rowSize =  [sql sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(CGRectGetWidth(self.view.frame) - 20, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
-        rowHeight = rowSize.height + 20;
-#pragma clang diagnostic pop
+        rowHeight = [PMHelper pmGetTextHeightWithText:sql width:CGRectGetWidth(self.view.frame) - 20] + 20;
         [self.heigthCache setObject:@(rowHeight) forKey:sqlKey];
     }
     return (rowHeight < 40 ? 44 : rowHeight);

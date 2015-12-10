@@ -11,5 +11,6 @@
 @implementation PMConfigure
 
 NSString *const kPMDbpathKey = @"PMDbPathKey";
+NSString *const kPMCSVFileRootPathName = @"pmcsv";
 
 @end

@@ -6,7 +6,6 @@
 //  Copyright © 2015年 WSY. All rights reserved.
 //
 
-#import <QuickLook/QuickLook.h>
 #import "PMTableDetailViewController.h"
 #import "PMFilePreviewViewController.h"
 #import "PMListView.h"
