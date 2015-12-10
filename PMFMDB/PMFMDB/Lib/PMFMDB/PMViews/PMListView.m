@@ -51,7 +51,7 @@
     _topButton.frame = CGRectMake(0, 0, listWidth, topViewHeigth);
     [_topButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_topButton addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
-    _topButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    _topButton.titleLabel.font = [UIFont systemFontOfSize:10];
     [self addSubview:_topButton];
 }
 

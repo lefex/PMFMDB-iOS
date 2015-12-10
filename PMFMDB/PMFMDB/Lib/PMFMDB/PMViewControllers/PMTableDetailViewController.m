@@ -52,7 +52,6 @@
         [self alertNoData];
         return;
     }
-    NSLog(@"datas = %@", datas);
     allCSVManager = [[PMCSVManager alloc] initData:datas];
     _filePath = allCSVManager.filePath;
     [self createPreview];
@@ -124,14 +123,14 @@
     CGFloat width = CGRectGetWidth(self.view.frame)/4.0;
     _columnNameView = [[PMListView alloc] initWithFrame:CGRectMake(0, 0, width+40, height)];
     NSDictionary *columnDict = [_dataManager getTableColumnNamesWithTableName:_tableName];
-    _columnNameView.topTitle = @"列名";
+    _columnNameView.topTitle = @"Cloumn";
     [_columnNameView showInView:self.view];
     [_columnNameView.dataArray addObjectsFromArray:[columnDict allKeys]];
     _columnNameView.delegate = self;
     [bgView addSubview:_columnNameView];
     
     _conditionListView = [[PMListView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_columnNameView.frame), 0, width-20 , height)];
-    _conditionListView.topTitle = @"条件";
+    _conditionListView.topTitle = @"Condition";
     [_conditionListView.dataArray addObjectsFromArray:@[@">", @"<", @"=", @">=", @"<=", @"!=", @"like"]];
     _conditionListView.delegate = self;
     [_conditionListView showInView:self.view];
@@ -139,7 +138,7 @@
     
     
     _valueTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_conditionListView.frame), 0, width, height)];
-    _valueTextField.placeholder = @"值";
+    _valueTextField.placeholder = @"Value";
     _valueTextField.textAlignment = NSTextAlignmentCenter;
     _valueTextField.font = [UIFont systemFontOfSize:14];
     [bgView addSubview:_valueTextField];
