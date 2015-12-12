@@ -92,15 +92,13 @@
             _textView.text = @"Execute success";
         }
     }else{
-        NSDictionary *dataDict = [dataManager getWithSql:_textView.text];
-        datas = dataDict[@"data"];
-        NSString *errorMessage = dataDict[@"isSuccess"];
-        if (datas.count) {
+        NSMutableArray *dataArray = [dataManager getWithSql:_textView.text];
+        if (dataArray.count) {
             PMCSVManager *csvManager = [[PMCSVManager alloc] initData:datas];
             PMFilePreviewViewController *previewVC = [[PMFilePreviewViewController alloc] initWithFilePath:csvManager.filePath];
             [self.navigationController pushViewController:previewVC animated:YES];
         }else{
-            _textView.text = errorMessage;
+            _textView.text = @"There is no data, or error happen";
         }
 
     }

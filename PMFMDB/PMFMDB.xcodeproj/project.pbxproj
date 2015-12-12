@@ -12,6 +12,7 @@
 		348AF8D21C1BAFB000559166 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8CE1C1BAFB000559166 /* line@2x.png */; };
 		348AF8D31C1BAFB000559166 /* rect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8CF1C1BAFB000559166 /* rect@2x.png */; };
 		348AF8D41C1BAFB000559166 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8D01C1BAFB000559166 /* search@2x.png */; };
+		348AF8D61C1BCF8100559166 /* pmfmdb.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8D51C1BCF8100559166 /* pmfmdb.png */; };
 		34AEE1951C12AE3F0074416E /* PMCSVManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE1941C12AE3F0074416E /* PMCSVManager.m */; };
 		34AEE1981C12E96A0074416E /* PMCSVFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE1971C12E96A0074416E /* PMCSVFileViewController.m */; };
 		34AEE19B1C13064D0074416E /* PMSQLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE19A1C13064D0074416E /* PMSQLViewController.m */; };
@@ -68,6 +69,7 @@
 		348AF8CE1C1BAFB000559166 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		348AF8CF1C1BAFB000559166 /* rect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rect@2x.png"; sourceTree = "<group>"; };
 		348AF8D01C1BAFB000559166 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
+		348AF8D51C1BCF8100559166 /* pmfmdb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pmfmdb.png; sourceTree = "<group>"; };
 		34AEE1931C12AE3F0074416E /* PMCSVManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCSVManager.h; sourceTree = "<group>"; };
 		34AEE1941C12AE3F0074416E /* PMCSVManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCSVManager.m; sourceTree = "<group>"; };
 		34AEE1961C12E96A0074416E /* PMCSVFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCSVFileViewController.h; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		34F301661C0D1C5F00B6629D /* PMFMDB */ = {
 			isa = PBXGroup;
 			children = (
+				348AF8D51C1BCF8100559166 /* pmfmdb.png */,
 				34F3019A1C0D1D7800B6629D /* Lib */,
 				34F3016A1C0D1C5F00B6629D /* AppDelegate.h */,
 				34F3016B1C0D1C5F00B6629D /* AppDelegate.m */,
@@ -429,6 +432,7 @@
 				348AF8D11C1BAFB000559166 /* bgview@2x.png in Resources */,
 				348AF8D31C1BAFB000559166 /* rect@2x.png in Resources */,
 				34F301721C0D1C5F00B6629D /* Main.storyboard in Resources */,
+				348AF8D61C1BCF8100559166 /* pmfmdb.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

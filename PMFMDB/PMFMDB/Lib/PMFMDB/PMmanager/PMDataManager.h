@@ -24,6 +24,6 @@
 
 - (NSError *)executeWithSql:(NSString *)sql;
 
-- (NSDictionary *)getWithSql:(NSString *)sql;
+- (NSMutableArray *)getWithSql:(NSString *)sql;
 
 @end

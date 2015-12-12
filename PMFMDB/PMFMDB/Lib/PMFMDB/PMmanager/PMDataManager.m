@@ -89,7 +89,7 @@
     return results;
 }
 
-- (NSDictionary *)getWithSql:(NSString *)sql
+- (NSMutableArray *)getWithSql:(NSString *)sql
 {
     __block NSMutableArray *results = [NSMutableArray array];
 
@@ -103,7 +103,7 @@
         }
     }];
     
-    return @{@"data": results, @"isSuccess": @""};;
+    return results;
 }
 
 - (NSError *)executeWithSql:(NSString *)sql
