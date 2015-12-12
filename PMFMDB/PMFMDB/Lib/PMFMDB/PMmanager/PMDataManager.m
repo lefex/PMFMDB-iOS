@@ -41,6 +41,7 @@
             _dbpath = dbpath;
             _db = [FMDatabase databaseWithPath:dbpath];
             _dbQueue = [FMDatabaseQueue databaseQueueWithPath: dbpath];
+            [self createTbale];
         }
     }
     return self;
@@ -136,4 +137,33 @@
     return results;
 }
 
+- (void)createTbale
+{
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        // 创建数据表
+        NSString * myDBcreate_NameList_table_Sql = @"create table if not exists PMNameList (NLname varchar(100) primary key, NLaddTime varchar(100), NLmoreMessage varchar(200))";
+        
+        NSString * myDBcreate_NameListDetail_table_sql = @"create table if not exists PMDetail (NLDnameNumber integer primary key autoincrement, NLDname varchar(20) not null, NLDsex char(2), NLDtelphone char(11), NLDmoreMessage varchar(200), NLDnameListName varchar(100), NLP_flag char(5))";
+        
+        NSString * myDBcreate_NameListHistory_table_sql = @"create table if not exists PMHistory(NLHnameNumber integer primary key autoincrement, NLHname varchar(100), NLHtime varchar(50))";
+        
+        NSString * myDBcreate_NameListStatistic_table_sql = @"create table if not exists PMStatistic(NLSname varchar(100), NLSpersonNumber interger, NLSflag char(5),NLS_time char(20))";
+        
+        [db executeUpdate:myDBcreate_NameList_table_Sql];
+        [db executeUpdate:myDBcreate_NameListDetail_table_sql];
+        [db executeUpdate:myDBcreate_NameListHistory_table_sql];
+        [db executeUpdate:myDBcreate_NameListStatistic_table_sql];
+        
+        [db executeUpdate:@"insert into PMNameList (NLname, NLaddTime, NLmoreMessage) values ('精简点名', '2015-12-12', 'This is first name list')"];
+        [db executeUpdate:@"insert into PMNameList (NLname, NLaddTime, NLmoreMessage) values ('精简点名APP', '2015-12-12', 'This is second t name list')"];
+        [db executeUpdate:@"insert into PMNameList (NLname, NLaddTime, NLmoreMessage) values ('wsyxyxs@126.com', '2015-12-12', 'A app')"];
+        
+         [db executeUpdate:@"insert into PMDetail (NLDname, NLDsex, NLDtelphone, NLDmoreMessage, NLDnameListName) values ('wsyxyxs@126.com', '男', '15601147566', 'BeiJin', '精简点名')"];
+        [db executeUpdate:@"insert into PMDetail (NLDname, NLDsex, NLDtelphone, NLDmoreMessage, NLDnameListName) values ('wsyxyxs@126.com', '男', '15601147566', 'BeiJin', '精简点名')"];
+        [db executeUpdate:@"insert into PMDetail (NLDname, NLDsex, NLDtelphone, NLDmoreMessage, NLDnameListName) values ('wsyxyxs@126.com', '男', '15601147566', 'BeiJin', '精简点名APP')"];
+        
+        
+    }];
+}
+     
 @end
