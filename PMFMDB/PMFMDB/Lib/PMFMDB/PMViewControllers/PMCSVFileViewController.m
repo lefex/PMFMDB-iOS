@@ -8,8 +8,7 @@
 
 #import "PMCSVFileViewController.h"
 #import "PMFilePreviewViewController.h"
-#import "PMConfigure.h"
-
+#import "PMHelper.h"
 
 @interface PMCSVFileViewController ()
 {
@@ -31,7 +30,7 @@ static NSString *kTableCellIdentifier = @"csvCellIdentifier";
 - (void)deleteAllData
 {
     NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[self csvRootPath] error:&error];
+    [[NSFileManager defaultManager] removeItemAtPath:[PMHelper csvRootPath] error:&error];
     if (error) {
         NSLog(@"Delete CSV file error :%@", error.localizedDescription);
     }else{
@@ -41,15 +40,15 @@ static NSString *kTableCellIdentifier = @"csvCellIdentifier";
 
 - (void)loadData
 {
-    _dataArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self csvRootPath] error:nil] mutableCopy];
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        _dataArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[PMHelper csvRootPath] error:nil] mutableCopy];
+       dispatch_async(dispatch_get_main_queue(), ^{
+           [self.tableView reloadData];
+
+       });
+    });
 }
 
-- (NSString *)csvRootPath
-{
-    return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
-            stringByAppendingPathComponent:kPMCSVFileRootPathName];
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -69,7 +68,7 @@ static NSString *kTableCellIdentifier = @"csvCellIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString *filePath = [[self csvRootPath] stringByAppendingPathComponent:_dataArray[indexPath.row] ?: @""];
+    NSString *filePath = [[PMHelper csvRootPath] stringByAppendingPathComponent:_dataArray[indexPath.row] ?: @""];
     PMFilePreviewViewController *previewVC = [[PMFilePreviewViewController alloc] initWithFilePath:filePath];
     [self.navigationController pushViewController:previewVC animated:YES];
 }
@@ -83,7 +82,7 @@ static NSString *kTableCellIdentifier = @"csvCellIdentifier";
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSError *error;
-        BOOL isRemove = [[NSFileManager defaultManager] removeItemAtPath:[[self csvRootPath] stringByAppendingPathComponent:_dataArray[indexPath.row] ?: @""] error:&error];
+        BOOL isRemove = [[NSFileManager defaultManager] removeItemAtPath:[[PMHelper csvRootPath] stringByAppendingPathComponent:_dataArray[indexPath.row] ?: @""] error:&error];
         if (isRemove) {
             [_dataArray removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];

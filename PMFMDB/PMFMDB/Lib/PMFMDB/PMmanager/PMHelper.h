@@ -12,4 +12,6 @@
 
 + (float)pmGetTextHeightWithText:(NSString *)text width:(float)width;
 
++ (NSString *)csvRootPath;
+
 @end

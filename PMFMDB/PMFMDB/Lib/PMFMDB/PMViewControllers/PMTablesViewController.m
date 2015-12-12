@@ -35,8 +35,14 @@
 
 - (void)_loadData
 {
-    _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
-    _dataArray = [[_dataManager getAllTables] mutableCopy];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
+        _dataArray = [[_dataManager getAllTables] mutableCopy];
+       dispatch_async(dispatch_get_main_queue(), ^{
+           [self.tableView reloadData];
+       });
+    });
+
 }
 
 

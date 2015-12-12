@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		342AD11B1C0E74D300DA266A /* PMTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342AD11A1C0E74D300DA266A /* PMTablesViewController.m */; };
+		348AF8D11C1BAFB000559166 /* bgview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8CD1C1BAFB000559166 /* bgview@2x.png */; };
+		348AF8D21C1BAFB000559166 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8CE1C1BAFB000559166 /* line@2x.png */; };
+		348AF8D31C1BAFB000559166 /* rect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8CF1C1BAFB000559166 /* rect@2x.png */; };
+		348AF8D41C1BAFB000559166 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348AF8D01C1BAFB000559166 /* search@2x.png */; };
 		34AEE1951C12AE3F0074416E /* PMCSVManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE1941C12AE3F0074416E /* PMCSVManager.m */; };
 		34AEE1981C12E96A0074416E /* PMCSVFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE1971C12E96A0074416E /* PMCSVFileViewController.m */; };
 		34AEE19B1C13064D0074416E /* PMSQLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AEE19A1C13064D0074416E /* PMSQLViewController.m */; };
@@ -19,7 +23,6 @@
 		34E33E731C16583F00D84D99 /* PMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E33E721C16583F00D84D99 /* PMHelper.m */; };
 		34E33E761C165B7000D84D99 /* PMConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E33E751C165B7000D84D99 /* PMConfigure.m */; };
 		34E33E791C165D0C00D84D99 /* PMFilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E33E781C165D0C00D84D99 /* PMFilePreviewViewController.m */; };
-		34E443B51C0F233D00A37B41 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E443B41C0F233D00A37B41 /* CHCSVParser.m */; };
 		34E443BB1C0F2C3F00A37B41 /* PMTableDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E443BA1C0F2C3F00A37B41 /* PMTableDetailViewController.m */; };
 		34E443BE1C0F309100A37B41 /* PMListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E443BD1C0F309100A37B41 /* PMListView.m */; };
 		34F301691C0D1C5F00B6629D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F301681C0D1C5F00B6629D /* main.m */; };
@@ -61,6 +64,10 @@
 		342AD1181C0DE2DF00DA266A /* PMDataSql.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMDataSql.h; sourceTree = "<group>"; };
 		342AD1191C0E74D300DA266A /* PMTablesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTablesViewController.h; sourceTree = "<group>"; };
 		342AD11A1C0E74D300DA266A /* PMTablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTablesViewController.m; sourceTree = "<group>"; };
+		348AF8CD1C1BAFB000559166 /* bgview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgview@2x.png"; sourceTree = "<group>"; };
+		348AF8CE1C1BAFB000559166 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
+		348AF8CF1C1BAFB000559166 /* rect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rect@2x.png"; sourceTree = "<group>"; };
+		348AF8D01C1BAFB000559166 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 		34AEE1931C12AE3F0074416E /* PMCSVManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCSVManager.h; sourceTree = "<group>"; };
 		34AEE1941C12AE3F0074416E /* PMCSVManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCSVManager.m; sourceTree = "<group>"; };
 		34AEE1961C12E96A0074416E /* PMCSVFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCSVFileViewController.h; sourceTree = "<group>"; };
@@ -81,8 +88,6 @@
 		34E33E751C165B7000D84D99 /* PMConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMConfigure.m; sourceTree = "<group>"; };
 		34E33E771C165D0C00D84D99 /* PMFilePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMFilePreviewViewController.h; sourceTree = "<group>"; };
 		34E33E781C165D0C00D84D99 /* PMFilePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMFilePreviewViewController.m; sourceTree = "<group>"; };
-		34E443B31C0F233D00A37B41 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
-		34E443B41C0F233D00A37B41 /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
 		34E443B91C0F2C3F00A37B41 /* PMTableDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTableDetailViewController.h; sourceTree = "<group>"; };
 		34E443BA1C0F2C3F00A37B41 /* PMTableDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTableDetailViewController.m; sourceTree = "<group>"; };
 		34E443BC1C0F309100A37B41 /* PMListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMListView.h; sourceTree = "<group>"; };
@@ -147,13 +152,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		34E443B21C0F233D00A37B41 /* CHCSVParser */ = {
+		348AF8CC1C1BAFB000559166 /* PMImages */ = {
 			isa = PBXGroup;
 			children = (
-				34E443B31C0F233D00A37B41 /* CHCSVParser.h */,
-				34E443B41C0F233D00A37B41 /* CHCSVParser.m */,
+				348AF8CD1C1BAFB000559166 /* bgview@2x.png */,
+				348AF8CE1C1BAFB000559166 /* line@2x.png */,
+				348AF8CF1C1BAFB000559166 /* rect@2x.png */,
+				348AF8D01C1BAFB000559166 /* search@2x.png */,
 			);
-			path = CHCSVParser;
+			path = PMImages;
 			sourceTree = "<group>";
 		};
 		34F3015B1C0D1C5F00B6629D = {
@@ -223,7 +230,6 @@
 		34F3019A1C0D1D7800B6629D /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				34E443B21C0F233D00A37B41 /* CHCSVParser */,
 				34F3019B1C0D1D7800B6629D /* fmdb */,
 				34F301A71C0D1D7800B6629D /* PMFMDB */,
 			);
@@ -251,6 +257,7 @@
 		34F301A71C0D1D7800B6629D /* PMFMDB */ = {
 			isa = PBXGroup;
 			children = (
+				348AF8CC1C1BAFB000559166 /* PMImages */,
 				34F3023A1C0D1FCE00B6629D /* PMmanager */,
 				34F3023C1C0D1FCE00B6629D /* PMViewControllers */,
 				34F3023D1C0D1FCE00B6629D /* PMViews */,
@@ -413,10 +420,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				348AF8D41C1BAFB000559166 /* search@2x.png in Resources */,
+				348AF8D21C1BAFB000559166 /* line@2x.png in Resources */,
 				34AEE1AB1C1425C50074416E /* PMCommonSql.plist in Resources */,
 				34AEE1A61C141EE60074416E /* PMExecuteSql.plist in Resources */,
 				34F301771C0D1C5F00B6629D /* LaunchScreen.storyboard in Resources */,
 				34F301741C0D1C5F00B6629D /* Assets.xcassets in Resources */,
+				348AF8D11C1BAFB000559166 /* bgview@2x.png in Resources */,
+				348AF8D31C1BAFB000559166 /* rect@2x.png in Resources */,
 				34F301721C0D1C5F00B6629D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,7 +465,6 @@
 				342AD11B1C0E74D300DA266A /* PMTablesViewController.m in Sources */,
 				34AEE19B1C13064D0074416E /* PMSQLViewController.m in Sources */,
 				34E33E731C16583F00D84D99 /* PMHelper.m in Sources */,
-				34E443B51C0F233D00A37B41 /* CHCSVParser.m in Sources */,
 				34E33E761C165B7000D84D99 /* PMConfigure.m in Sources */,
 				34E443BE1C0F309100A37B41 /* PMListView.m in Sources */,
 				34F301A81C0D1D7800B6629D /* FMDatabase.m in Sources */,

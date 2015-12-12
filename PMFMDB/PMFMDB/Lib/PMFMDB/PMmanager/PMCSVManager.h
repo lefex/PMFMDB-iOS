@@ -15,3 +15,13 @@
 @property (nonatomic, readonly) NSString *filePath;
 
 @end
+
+@interface PMCSVWriter : NSObject
+
+- (instancetype)initForWritingToCSVFile:(NSString *)path;
+
+- (void)writeField:(id)field;
+
+- (void)finishLine;
+
+@end

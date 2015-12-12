@@ -55,6 +55,12 @@
     [self addSubview:_topButton];
 }
 
+- (void)setDataArray:(NSMutableArray *)dataArray
+{
+    _dataArray = dataArray;
+    [_tableView reloadData];
+}
+
 - (void)setTopTitle:(NSString *)topTitle
 {
     _topTitle = topTitle;
@@ -81,7 +87,7 @@
 - (void)isShowListView:(BOOL)show
 {
     [UIView animateWithDuration:0.2 animations:^{
-        _tableView.frame = CGRectMake(oldFrame.origin.x, show ? topViewHeigth : oldFrame.origin.y, listWidth, show ? [self getListViewHeight] : 0);
+        _tableView.frame = CGRectMake(oldFrame.origin.x, topViewHeigth, listWidth, show ? [self getListViewHeight] : 0);
     } completion:^(BOOL finished) {
         if (finished) {
             [_tableView reloadData];
@@ -93,7 +99,7 @@
 - (CGFloat)getListViewHeight
 {
     CGFloat scrHeight = [UIScreen mainScreen].bounds.size.height;
-    CGFloat maxHeight = scrHeight - 200;
+    CGFloat maxHeight = scrHeight - 100;
     CGFloat totoalHeight = _dataArray.count * _rowHeight;
     return MIN(maxHeight, totoalHeight);
 }
@@ -133,6 +139,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row < [_dataArray count]) {
         NSString *title = _dataArray[indexPath.row];
+        isShow = NO;
         [self isShowListView:NO];
         self.topTitle = title;
         if (self.delegate && [self.delegate respondsToSelector:@selector(listViewDidSelectIndexTitle:)]) {

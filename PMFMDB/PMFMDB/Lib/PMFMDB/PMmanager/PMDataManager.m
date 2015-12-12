@@ -78,8 +78,7 @@
 {
     __block NSMutableArray *results = [NSMutableArray array];
     [_dbQueue inDatabase:^(FMDatabase *db) {
-        NSError *error;
-        FMResultSet *set = [db executeQuery: sql values:nil error:&error];
+        FMResultSet *set = [db executeQuery: sql];
         while ([set next]) {
             NSDictionary *tableDict = [set resultDictionary];
             if (tableDict) {
@@ -93,10 +92,9 @@
 - (NSDictionary *)getWithSql:(NSString *)sql
 {
     __block NSMutableArray *results = [NSMutableArray array];
-    __block  NSError *error;
 
     [_dbQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet *set = [db executeQuery: sql values:nil error:&error];
+        FMResultSet *set = [db executeQuery: sql];
         while ([set next]) {
             NSDictionary *tableDict = [set resultDictionary];
             if (tableDict) {
@@ -105,9 +103,6 @@
         }
     }];
     
-    if (error) {
-        return @{@"data": results, @"isSuccess": error.localizedDescription ?: @""};
-    }
     return @{@"data": results, @"isSuccess": @""};;
 }
 

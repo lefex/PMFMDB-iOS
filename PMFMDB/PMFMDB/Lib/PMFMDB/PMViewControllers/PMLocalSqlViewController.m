@@ -41,8 +41,14 @@ static NSString *kTableCellIdentifier = @"localSqlCellIdentifier";
 
 - (void)loadData
 {
-     _dataDict = [NSDictionary dictionaryWithContentsOfFile:[self localSqlPath]];
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        _dataDict = [NSDictionary dictionaryWithContentsOfFile:[self localSqlPath]];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+
+        });
+    });
 }
 
 - (NSString *)localSqlPath

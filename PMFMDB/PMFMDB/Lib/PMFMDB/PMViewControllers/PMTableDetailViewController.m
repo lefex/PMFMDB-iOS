@@ -35,7 +35,8 @@
 
 @implementation PMTableDetailViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = _tableName;
@@ -47,14 +48,23 @@
 #pragma mark - action
 - (void)_searchAllData
 {
-    NSArray *datas = [_dataManager getTableAllValueWithTableName:_tableName];
-    if (!datas.count) {
-        [self alertNoData];
-        return;
+    if ([_valueTextField isFirstResponder]) {
+        [_valueTextField resignFirstResponder];
     }
-    allCSVManager = [[PMCSVManager alloc] initData:datas];
-    _filePath = allCSVManager.filePath;
-    [self createPreview];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *datas = [_dataManager getTableAllValueWithTableName:_tableName];
+        if (!datas.count) {
+            [self alertNoData];
+            return;
+        }
+        allCSVManager = [[PMCSVManager alloc] initData:datas];
+        _filePath = allCSVManager.filePath;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self createPreview];
+
+        });
+    });
 }
 
 - (void)alertNoData
@@ -69,6 +79,10 @@
 
 - (void)_searchPartDataAction
 {
+    if ([_valueTextField isFirstResponder]) {
+        [_valueTextField resignFirstResponder];
+    }
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
     if (_columnNameView.topTitle.length == 0  || [_columnNameView.topTitle isEqualToString:@"列名"]) {
@@ -107,6 +121,9 @@
 #pragma mark - PMListViewDelegate
 - (void)listViewWillClickTopView:(PMListView *)listView
 {
+    if ([_valueTextField isFirstResponder]) {
+        [_valueTextField resignFirstResponder];
+    }
     [_filePreviewController.qlPreviewViewController.view removeFromSuperview];
     _filePreviewController = nil;
 }
@@ -115,19 +132,33 @@
 - (void)createHeaderView
 {
     CGFloat height = 44;
-    UIImageView *bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), height)];
+    CGFloat topY = 0;
+    if (CGRectGetMinY(self.view.frame) == 20) {
+        topY = 44;
+    }else if (CGRectGetMinY(self.view.frame) == 64){
+        topY = 0;
+    }else if (CGRectGetMinY(self.view.frame) == 0){
+        topY = 64;
+    }
+    UIImageView *bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, topY, CGRectGetWidth(self.view.frame), height)];
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.image = [UIImage imageNamed:@"rect"];
     bgView.userInteractionEnabled = YES;
     
     CGFloat width = CGRectGetWidth(self.view.frame)/4.0;
     _columnNameView = [[PMListView alloc] initWithFrame:CGRectMake(0, 0, width+40, height)];
-    NSDictionary *columnDict = [_dataManager getTableColumnNamesWithTableName:_tableName];
     _columnNameView.topTitle = @"Cloumn";
     [_columnNameView showInView:self.view];
-    [_columnNameView.dataArray addObjectsFromArray:[columnDict allKeys]];
     _columnNameView.delegate = self;
     [bgView addSubview:_columnNameView];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSDictionary *columnDict = [_dataManager getTableColumnNamesWithTableName:_tableName];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_columnNameView.dataArray addObjectsFromArray:[columnDict allKeys]];
+        });
+
+    });
     
     _conditionListView = [[PMListView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_columnNameView.frame), 0, width-20 , height)];
     _conditionListView.topTitle = @"Condition";
