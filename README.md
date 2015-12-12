@@ -17,5 +17,6 @@ There is one main class in PMFMDB:
   mainViewController.dataPath = [self messageDBPath];
   self.navigationController pushViewController:mainViewController animated:YES];
 </pre>
-
+<pre>
 ![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.png)
+</pre>
