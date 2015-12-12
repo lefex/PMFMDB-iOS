@@ -19,5 +19,5 @@ There is one main class in PMFMDB:
   self.navigationController pushViewController:mainViewController animated:YES];
 </pre>
 <pre>
-![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.png)
+![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.gif)
 </pre>
