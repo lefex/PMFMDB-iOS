@@ -1,6 +1,6 @@
 # PMFMDB V1.0
 This is a sqlite tools to show database data and run sql, such as sqliteManager tools.
-This project user FMDB, if you have this Third libs in you project, you should not include this Third libs when you install.You just input PMFMDB.
+This used FMDB. If you have FMDB in you project, you should not include it when you install.You just input PMFMDB.
 
 # PMFMDB Main Funcation
 - You can seach all the table in you database;
