@@ -46,7 +46,7 @@ There is one main class in PMFMDB:
 
 #The page
 <pre>
-![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.gif)
+![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.png)
 </pre>
 
 #Support
