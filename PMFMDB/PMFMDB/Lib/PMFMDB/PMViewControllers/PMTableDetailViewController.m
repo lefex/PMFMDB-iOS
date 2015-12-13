@@ -87,13 +87,13 @@
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    if (_columnNameView.topTitle.length == 0  || [_columnNameView.topTitle isEqualToString:@"列名"]) {
+    if (_columnNameView.topTitle.length == 0  || [_columnNameView.topTitle isEqualToString:@"Cloumn"]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Please select column name!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
         return;
     }
     
-    if (_conditionListView.topTitle.length == 0  || [_conditionListView.topTitle isEqualToString:@"条件"]) {
+    if (_conditionListView.topTitle.length == 0  || [_conditionListView.topTitle isEqualToString:@"Condition"]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Please select condition name!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
         return;
