@@ -23,6 +23,15 @@ There is one main class in PMFMDB:
   mainViewController.dataPath = [self messageDBPath];
   self.navigationController pushViewController:mainViewController animated:YES];
 </pre>
+
+#Run SQL - Run sql in you data base.
+* Add SQL to the file PMExecuteSql.plist which save the SQL you want to execute;
+* Enter to `PMFMDB` page, the main view controller;
+* Click `Execute SQL` you will enter to `PMSQL` page;
+* Click the button `Local SQL`, Select the SQL that you add;
+* Click button `Run SQL`
+
+#The page
 <pre>
 ![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.gif)
 </pre>
