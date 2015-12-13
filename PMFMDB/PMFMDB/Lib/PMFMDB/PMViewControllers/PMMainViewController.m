@@ -47,7 +47,7 @@
     
     _dataArray = @[@"All tables",
                    @"Execute SQL",
-                   @"The recodes that you searched"
+                   @"The records that you searched"
                    ];
     _dataDescriptions = @[@"All the tables that in you database", @"You can execute SQL in your database what you like", @"The recodes that you have searched."];
     

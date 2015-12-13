@@ -100,7 +100,7 @@
 {
     CGFloat scrHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat maxHeight = scrHeight - 100;
-    CGFloat totoalHeight = _dataArray.count * _rowHeight;
+    CGFloat totoalHeight = _dataArray.count * _rowHeight + 100;
     return MIN(maxHeight, totoalHeight);
 }
 

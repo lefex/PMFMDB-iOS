@@ -156,8 +156,8 @@
     CGFloat width = CGRectGetWidth(self.view.frame)/4.0;
     _columnNameView = [[PMListView alloc] initWithFrame:CGRectMake(0, 0, width+40, height)];
     _columnNameView.topTitle = @"Cloumn";
-    [_columnNameView showInView:self.view];
     _columnNameView.delegate = self;
+    [_columnNameView showInView:self.view];
     [bgView addSubview:_columnNameView];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -168,12 +168,12 @@
 
     });
     
-    _conditionListView = [[PMListView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_columnNameView.frame), 0, width-20 , height)];
+    _conditionListView = [[PMListView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_columnNameView.frame), 0, width-20, height)];
     _conditionListView.topTitle = @"Condition";
-    [_conditionListView.dataArray addObjectsFromArray:@[@">", @"<", @"=", @">=", @"<=", @"!=", @"like"]];
     _conditionListView.delegate = self;
     [_conditionListView showInView:self.view];
     [bgView addSubview:_conditionListView];
+    [_conditionListView.dataArray addObjectsFromArray:@[@"",@"",@">", @"<", @"=", @">=", @"<=", @"!=", @"like"]];
     
     
     _valueTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_conditionListView.frame), 0, width, height)];
