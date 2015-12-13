@@ -25,10 +25,12 @@
 {
     [super touchesBegan:touches withEvent:event];
     PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
+    // You must assign you DB path to the PMMainViewController
     mainViewController.dataPath = [self messageDBPath];
     [self.navigationController pushViewController:mainViewController animated:YES];
 }
 
+// The DB path
 - (NSString *)messageDBPath
 {
     return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]

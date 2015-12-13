@@ -45,6 +45,10 @@
 
 - (void)searchClickAction:(UIButton *)button
 {
+    if ([_textView isFirstResponder]) {
+        [_textView resignFirstResponder];
+    }
+    
     NSUInteger index = button.tag - 44444;
     __weak typeof(self) _self = self;
     if (index == 1 || index == 2) {
@@ -77,12 +81,17 @@
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Please input your sql!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
+        [_textView becomeFirstResponder];
 #pragma clang diagnostic pop
         return;
     }
+    
+    if ([_textView isFirstResponder]) {
+        [_textView resignFirstResponder];
+    }
+    
     PMDataManager *dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:@"dbpath"]];
     
-    NSArray *datas;
     _textView.textColor = [UIColor redColor];
     if ([[_textView.text lowercaseString] rangeOfString:@"select"].location == NSNotFound) {
         NSError *error = [dataManager executeWithSql:_textView.text];
@@ -92,15 +101,21 @@
             _textView.text = @"Execute success";
         }
     }else{
-        NSMutableArray *dataArray = [dataManager getWithSql:_textView.text];
-        if (dataArray.count) {
-            PMCSVManager *csvManager = [[PMCSVManager alloc] initData:datas];
-            PMFilePreviewViewController *previewVC = [[PMFilePreviewViewController alloc] initWithFilePath:csvManager.filePath];
-            [self.navigationController pushViewController:previewVC animated:YES];
-        }else{
-            _textView.text = @"There is no data, or error happen";
-        }
-
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSMutableArray *dataArray = [dataManager getWithSql:_textView.text];
+            PMCSVManager *csvManager;
+            if (dataArray.count) {
+               csvManager  = [[PMCSVManager alloc] initData:dataArray];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (dataArray.count) {
+                    PMFilePreviewViewController *previewVC = [[PMFilePreviewViewController alloc] initWithFilePath:csvManager.filePath];
+                    [self.navigationController pushViewController:previewVC animated:YES];
+                }else{
+                     _textView.text = @"There is no data, or error happen";
+                }
+            });
+        });
     }
 }
 
@@ -116,6 +131,9 @@
 #pragma mark - PMLinkViewDelegate
 - (void)linkViewDidClickText:(NSString *)linkText linkView:(PMLinkView *)linkView
 {
+    if ([_textView isFirstResponder]) {
+        [_textView resignFirstResponder];
+    }
     _textView.textColor = [UIColor blackColor];
     [self setTextViewText:linkText];
 }

@@ -53,15 +53,17 @@
     }
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSArray *datas = [_dataManager getTableAllValueWithTableName:_tableName];
-        if (!datas.count) {
-            [self alertNoData];
-            return;
+        if (datas.count) {
+            allCSVManager = [[PMCSVManager alloc] initData:datas];
+            _filePath = allCSVManager.filePath;
         }
-        allCSVManager = [[PMCSVManager alloc] initData:datas];
-        _filePath = allCSVManager.filePath;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self createPreview];
+            if (datas.count) {
+                [self createPreview];
+            }else{
+                [self alertNoData];
+            }
 
         });
     });
@@ -106,16 +108,22 @@
 #pragma clang diagnostic pop
     
     NSString *sql = [NSString stringWithFormat:@"SELECT *FROM %@ WHERE %@ %@ %@", _tableName, _columnNameView.topTitle, _conditionListView.topTitle, _valueTextField.text];
-    NSArray *datas = [_dataManager getTableValueWithSql:sql];
-    if (!datas.count) {
-        [self alertNoData];
-        return;
-    }
-    NSLog(@"datas = %@", datas);
-
-    partCSVManager = [[PMCSVManager alloc] initData:datas];
-    _filePath = partCSVManager.filePath;
-    [self createPreview];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *datas = [_dataManager getTableValueWithSql:sql];
+        if (datas.count > 0) {
+            partCSVManager = [[PMCSVManager alloc] initData:datas];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!datas.count) {
+                [self alertNoData];
+            }else{
+                _filePath = partCSVManager.filePath;
+                [self createPreview];
+            }
+        });
+    });
+    
 }
 
 #pragma mark - PMListViewDelegate

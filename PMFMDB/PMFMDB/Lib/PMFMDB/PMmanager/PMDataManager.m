@@ -41,7 +41,12 @@
             _dbpath = dbpath;
             _db = [FMDatabase databaseWithPath:dbpath];
             _dbQueue = [FMDatabaseQueue databaseQueueWithPath: dbpath];
-            [self createTbale];
+            
+            /**
+             *  This is not user, if you want to test PMFMDB, you can create 
+             *  tables and test it
+             */
+            //[self createTbale];
         }
     }
     return self;
@@ -137,6 +142,9 @@
     return results;
 }
 
+/**
+ *  create table if you want to test FMFMDB
+ */
 - (void)createTbale
 {
     [_dbQueue inDatabase:^(FMDatabase *db) {

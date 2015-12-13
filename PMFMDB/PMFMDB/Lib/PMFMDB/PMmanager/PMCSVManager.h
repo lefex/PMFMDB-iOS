@@ -16,6 +16,11 @@
 
 @end
 
+/**
+ This class is intend to write data in CSV file
+ 
+ - returns: 
+ */
 @interface PMCSVWriter : NSObject
 
 - (instancetype)initForWritingToCSVFile:(NSString *)path;
