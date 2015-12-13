@@ -31,6 +31,12 @@ There is one main class in PMFMDB:
 * Click the button `Local SQL`, Select the SQL that you add;
 * Click button `Run SQL`
 
+#Show search history
+* Enter to `PMFMDB` page, the main view controller;
+* Click `The records that you searched` you will enter to `PMCSV` page;
+* Click item to preview the results
+* Click top right corner trash, you will delete all the records. You should clean up all the records when you publish you APP
+
 #The page
 <pre>
 ![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.gif)
