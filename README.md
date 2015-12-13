@@ -23,6 +23,28 @@ There is one main class in PMFMDB:
   mainViewController.dataPath = [self messageDBPath];
   self.navigationController pushViewController:mainViewController animated:YES];
 </pre>
+
+#All tables
+* Enter to `PMFMDB` page, the main view controller.
+* Click `All tables` you will enter to `PMTables` page. You can see all the tables that in you database and the SQL that create table.
+* Click cell you will enter to `PMDetail`. You can search data in your table.
+* Click top right corner search button, search all the data in your table.
+* You can search data with condition what you what.
+
+#Run SQL - Run sql in you data base.
+* Add SQL to the file PMExecuteSql.plist which save the SQL you want to execute;
+* Enter to `PMFMDB` page, the main view controller;
+* Click `Execute SQL` you will enter to `PMSQL` page;
+* Click the button `Local SQL`, Select the SQL that you add;
+* Click button `Run SQL`
+
+#Show search history
+* Enter to `PMFMDB` page, the main view controller;
+* Click `The records that you searched` you will enter to `PMCSV` page;
+* Click item to preview the results
+* Click top right corner trash, you will delete all the records. You should clean up all the records when you publish you APP
+
+#The page
 <pre>
 ![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.gif)
 </pre>
