@@ -10,7 +10,7 @@ This used FMDB. If you have FMDB in you project, you should not include it when 
 - You can copy the SQL to run;
 - You can select a common SQL to run;
 
-#Install
+#Installation
 - In the directory ./lib.  Drag PMFMDB and FMDB to you project, If you have installed FMDB, you should not drag FMDB to your project.
 - Import "PMMainViewController.h" in you view controller when you use.
 - You must make the database path is same to your project, and then assign to PMMainViewController
@@ -26,3 +26,6 @@ There is one main class in PMFMDB:
 <pre>
 ![](https://github.com/wsyxyxs/PMFMDB/raw/master/PMFMDB/PMFMDB/pmfmdb.gif)
 </pre>
+
+#Support
+If you have any questions, you can send email(`wsyxyxs@126.com`) to me.
