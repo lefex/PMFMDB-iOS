@@ -45,9 +45,7 @@ There is one main class in PMFMDB:
 * Click top right corner trash, you will delete all the records. You should clean up all the records when you publish you APP
 
 #The page
-<pre>
-![](https://github.com/wsyxyxs/PMFMDB-iOS/raw/master/PMFMDB/PMFMDB/pmfmdb.png)
-</pre>
+<pre>![](https://github.com/wsyxyxs/PMFMDB-iOS/raw/master/PMFMDB/PMFMDB/pmfmdb.png)</pre>
 
 #Support
 If you have any questions, you can send email(`wsyxyxs@126.com`) to me.
