@@ -24,6 +24,13 @@ There is one main class in PMFMDB:
   self.navigationController pushViewController:mainViewController animated:YES];
 </pre>
 
+#All tables
+* Enter to `PMFMDB` page, the main view controller.
+* Click `All tables` you will enter to `PMTables` page. You can see all the tables that in you database and the SQL that create table.
+* Click cell you will enter to `PMDetail`. You can search data in your table.
+* Click top right corner search button, search all the data in your table.
+* You can search data with condition what you what.
+
 #Run SQL - Run sql in you data base.
 * Add SQL to the file PMExecuteSql.plist which save the SQL you want to execute;
 * Enter to `PMFMDB` page, the main view controller;
