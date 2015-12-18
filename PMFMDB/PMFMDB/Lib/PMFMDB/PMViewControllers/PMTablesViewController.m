@@ -59,8 +59,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kTableCellIdentifier];
     }
     NSDictionary *dict = _dataArray[indexPath.row];
-    cell.textLabel.text = dict[@"name"] ?: @"";
-    cell.detailTextLabel.text = dict[@"sql"] ?: @"";
+    cell.textLabel.text = dict[@"name"];
+    cell.detailTextLabel.text = dict[@"sql"];
     cell.detailTextLabel.numberOfLines = 0;
     return cell;
 }
@@ -88,8 +88,9 @@
 {
     CGFloat rowHeight = 0;
     NSDictionary *dict = _dataArray[indexPath.row];
-    NSString *tableName = dict[@"name"] ?: @"";
-    NSString *sql = dict[@"sql"] ?: @"";
+    NSString *tableName = dict[@"name"];
+    NSString *sql = dict[@"sql"];
+
     if (tableName.length == 0 || sql.length == 0) return 44;
     
     if (self.heigthCache[tableName]) {

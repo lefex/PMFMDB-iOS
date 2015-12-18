@@ -58,10 +58,37 @@
     [_dbQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *set = [db executeQuery: get_all_table_sql];
         while ([set next]) {
-            NSDictionary *tableDict = [set resultDictionary];
-            if (tableDict) {
-                [results addObject:tableDict];
+            NSString *name = [set stringForColumn:@"name"];
+            NSString *sql = [set stringForColumn:@"sql"];
+            if ([name isKindOfClass:[NSNull class]]) {
+                name = @"";
             }
+            if ([sql isKindOfClass:[NSNull class]]) {
+                sql = @"";
+            }
+            NSDictionary *tableDict = @{@"name":name?:@"", @"sql":sql?:@""};
+            [results addObject:tableDict];
+        }
+    }];
+    return results;
+}
+
+- (NSArray *)getAllIndexs
+{
+    __block NSMutableArray *results = [NSMutableArray array];
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *set = [db executeQuery: get_all_table_sql];
+        while ([set next]) {
+            NSString *name = [set stringForColumn:@"name"];
+            NSString *sql = [set stringForColumn:@"sql"];
+            if ([name isKindOfClass:[NSNull class]]) {
+                name = @"";
+            }
+            if ([sql isKindOfClass:[NSNull class]]) {
+                sql = @"";
+            }
+            NSDictionary *tableDict = @{@"name":name?:@"", @"sql":sql?:@""};
+            [results addObject:tableDict];
         }
     }];
     return results;
