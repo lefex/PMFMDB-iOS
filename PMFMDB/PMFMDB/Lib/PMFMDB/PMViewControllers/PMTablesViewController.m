@@ -29,6 +29,7 @@
 {
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.sectionHeaderHeight = 30;
     self.heigthCache = [NSMutableDictionary dictionary];
     [self _loadData];
 }
@@ -38,6 +39,8 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
         _dataArray = [[_dataManager getAllTables] mutableCopy];
+        
+        [_dataManager getDBSize];
        dispatch_async(dispatch_get_main_queue(), ^{
            [self.tableView reloadData];
        });
@@ -84,6 +87,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
+    label.textColor = [UIColor redColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor lightGrayColor];
+    label.text = [_dataManager getDBSize];
+    return label;
+}
+
 - (CGFloat)getHeightWithIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat rowHeight = 0;
@@ -101,5 +114,7 @@
     }
     return (rowHeight < 44 ? 44 : rowHeight);
 }
+
+
 
 @end
