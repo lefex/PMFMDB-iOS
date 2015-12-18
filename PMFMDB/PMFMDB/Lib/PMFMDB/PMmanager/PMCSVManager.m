@@ -22,11 +22,13 @@
 {
     self = [super init];
     if (self) {
+        self.contentMaxLength = 50;
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
         NSString *dateStr = [formatter stringFromDate:[NSDate date]];
         _dataArray = [data copy];
         NSString *rootPath = [PMHelper csvRootPath];
+        
         NSError *error;
         [[NSFileManager defaultManager] createDirectoryAtPath:rootPath withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
@@ -55,7 +57,15 @@
     // write data
     for (NSDictionary *dataDict in _dataArray) {
         for (NSString *columnValue in [dataDict allValues]) {
-            [_csvWrite writeField:columnValue];
+            if ([columnValue isKindOfClass:[NSString class]]) {
+                if (columnValue.length <= self.contentMaxLength) {
+                    [_csvWrite writeField:columnValue];
+                }else{
+                    [_csvWrite writeField:[columnValue substringToIndex:self.contentMaxLength]];
+                }
+            }else{
+                 [_csvWrite writeField:columnValue];
+            }
         }
         [_csvWrite finishLine];
     }

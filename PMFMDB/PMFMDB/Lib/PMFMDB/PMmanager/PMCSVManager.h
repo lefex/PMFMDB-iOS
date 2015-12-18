@@ -14,6 +14,11 @@
 
 @property (nonatomic, readonly) NSString *filePath;
 
+/**
+ *  The max length of content, default 50
+ */
+@property (nonatomic, assign) NSUInteger contentMaxLength;
+
 @end
 
 /**
@@ -28,5 +33,6 @@
 - (void)writeField:(id)field;
 
 - (void)finishLine;
+
 
 @end
