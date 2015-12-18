@@ -26,4 +26,6 @@
 
 - (NSMutableArray *)getWithSql:(NSString *)sql;
 
+- (NSString *)sqlIsValid:(NSString *)sql;
+
 @end

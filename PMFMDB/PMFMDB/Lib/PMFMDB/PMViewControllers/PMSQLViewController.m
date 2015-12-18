@@ -91,6 +91,12 @@
     }
     
     PMDataManager *dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:@"dbpath"]];
+   NSString *err = [dataManager sqlIsValid:_textView.text];
+    if (err) {
+        _textView.textColor = [UIColor redColor];
+        _textView.text = err;
+        return;
+    }
     
     _textView.textColor = [UIColor redColor];
     if ([[_textView.text lowercaseString] rangeOfString:@"select"].location == NSNotFound) {

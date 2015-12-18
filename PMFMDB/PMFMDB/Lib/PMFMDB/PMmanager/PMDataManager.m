@@ -46,7 +46,7 @@
              *  This is not user, if you want to test PMFMDB, you can create 
              *  tables and test it
              */
-            //[self createTbale];
+            [self createTbale];
         }
     }
     return self;
@@ -140,6 +140,19 @@
         }
     }];
     return results;
+}
+
+- (NSString *)sqlIsValid:(NSString *)sql
+{
+    __block NSError *error;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        [db validateSQL:sql error:&error];
+    }];
+    if (error) {
+        return error.localizedDescription;
+    }else{
+        return nil;
+    }
 }
 
 /**
