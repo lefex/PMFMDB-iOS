@@ -50,3 +50,6 @@ There is one main class in PMFMDB:
 
 #Support
 If you have any questions, you can send email(`wsyxyxs@126.com`) to me.
+
+#License
+PMFMDB is provided under the MIT license. See LICENSE file for details.
