@@ -16,6 +16,10 @@
 
 - (NSArray *)getAllTables;
 
+- (NSArray *)getAllIndexs;
+
+- (NSString *)getDBSize;
+
 - (NSDictionary *)getTableColumnNamesWithTableName:(NSString *)tableName;
 
 - (NSArray *)getTableAllValueWithTableName:(NSString *)tableName;
@@ -27,5 +31,6 @@
 - (NSMutableArray *)getWithSql:(NSString *)sql;
 
 - (NSString *)sqlIsValid:(NSString *)sql;
+
 
 @end

@@ -29,6 +29,7 @@
 {
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.sectionHeaderHeight = 30;
     self.heigthCache = [NSMutableDictionary dictionary];
     [self _loadData];
 }
@@ -38,6 +39,8 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         _dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
         _dataArray = [[_dataManager getAllTables] mutableCopy];
+        
+        [_dataManager getDBSize];
        dispatch_async(dispatch_get_main_queue(), ^{
            [self.tableView reloadData];
        });
@@ -59,8 +62,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kTableCellIdentifier];
     }
     NSDictionary *dict = _dataArray[indexPath.row];
-    cell.textLabel.text = dict[@"name"] ?: @"";
-    cell.detailTextLabel.text = dict[@"sql"] ?: @"";
+    cell.textLabel.text = dict[@"name"];
+    cell.detailTextLabel.text = dict[@"sql"];
     cell.detailTextLabel.numberOfLines = 0;
     return cell;
 }
@@ -84,12 +87,23 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
+    label.textColor = [UIColor redColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor lightGrayColor];
+    label.text = [_dataManager getDBSize];
+    return label;
+}
+
 - (CGFloat)getHeightWithIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat rowHeight = 0;
     NSDictionary *dict = _dataArray[indexPath.row];
-    NSString *tableName = dict[@"name"] ?: @"";
-    NSString *sql = dict[@"sql"] ?: @"";
+    NSString *tableName = dict[@"name"];
+    NSString *sql = dict[@"sql"];
+
     if (tableName.length == 0 || sql.length == 0) return 44;
     
     if (self.heigthCache[tableName]) {
@@ -100,5 +114,7 @@
     }
     return (rowHeight < 44 ? 44 : rowHeight);
 }
+
+
 
 @end

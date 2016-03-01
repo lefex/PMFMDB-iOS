@@ -8,3 +8,5 @@
 
 
 NSString *const get_all_table_sql = @"SELECT * FROM sqlite_master WHERE type='table' ORDER BY name";
+
+NSString *const get_all_index_sql = @"SELECT * FROM sqlite_master WHERE type='index' ORDER BY name";

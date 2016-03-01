@@ -6,6 +6,7 @@
 //  Copyright © 2015年 WSY. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "PMDataManager.h"
 #import "FMDB.h"
 #import "PMDataSql.h"
@@ -46,10 +47,28 @@
              *  This is not user, if you want to test PMFMDB, you can create 
              *  tables and test it
              */
-            [self createTbale];
+//            [self createTbale];
         }
     }
     return self;
+}
+
+- (NSString *)getDBSize
+{
+    NSDictionary *att = [[NSFileManager defaultManager] attributesOfItemAtPath:_dbpath error:nil];
+    NSUInteger totalSize = [[att objectForKey:NSFileSize] longLongValue];
+    NSUInteger tempSize = totalSize/1024;
+    if (tempSize >= 1024) {
+        CGFloat temMB = tempSize/1024.0;
+        if (temMB >= 1024.0) {
+            CGFloat temGB = temMB/1024.0;
+            return [NSString stringWithFormat:@"%.2f GB",temGB];
+        }else{
+            return [NSString stringWithFormat:@"%.2f MB",temMB];
+        }
+    }
+    CGFloat KBSize = totalSize/1024.0;
+    return [NSString stringWithFormat:@"%.2f KB",KBSize];;
 }
 
 - (NSArray *)getAllTables
@@ -58,10 +77,37 @@
     [_dbQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *set = [db executeQuery: get_all_table_sql];
         while ([set next]) {
-            NSDictionary *tableDict = [set resultDictionary];
-            if (tableDict) {
-                [results addObject:tableDict];
+            NSString *name = [set stringForColumn:@"name"];
+            NSString *sql = [set stringForColumn:@"sql"];
+            if ([name isKindOfClass:[NSNull class]]) {
+                name = @"";
             }
+            if ([sql isKindOfClass:[NSNull class]]) {
+                sql = @"";
+            }
+            NSDictionary *tableDict = @{@"name":name?:@"", @"sql":sql?:@""};
+            [results addObject:tableDict];
+        }
+    }];
+    return results;
+}
+
+- (NSArray *)getAllIndexs
+{
+    __block NSMutableArray *results = [NSMutableArray array];
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *set = [db executeQuery: get_all_table_sql];
+        while ([set next]) {
+            NSString *name = [set stringForColumn:@"name"];
+            NSString *sql = [set stringForColumn:@"sql"];
+            if ([name isKindOfClass:[NSNull class]]) {
+                name = @"";
+            }
+            if ([sql isKindOfClass:[NSNull class]]) {
+                sql = @"";
+            }
+            NSDictionary *tableDict = @{@"name":name?:@"", @"sql":sql?:@""};
+            [results addObject:tableDict];
         }
     }];
     return results;
