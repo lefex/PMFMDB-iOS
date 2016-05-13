@@ -12,10 +12,13 @@
 #import "PMHelper.h"
 #import "PMConfigure.h"
 
-@interface PMTablesViewController ()
+@interface PMTablesViewController ()<UIAlertViewDelegate>
 {
     PMDataManager *_dataManager;
     NSMutableArray *_dataArray;
+    
+    BOOL _isReducedMode; // Reduced mode
+    NSIndexPath *_delIndexPath;
 }
 
 @property (nonatomic, strong) NSMutableDictionary *heigthCache;
@@ -31,6 +34,8 @@
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.sectionHeaderHeight = 30;
     self.heigthCache = [NSMutableDictionary dictionary];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(rightItemClick)];
+    _isReducedMode = YES;
     [self _loadData];
 }
 
@@ -48,7 +53,14 @@
 
 }
 
+#pragma mark - Action
+- (void)rightItemClick
+{
+    _isReducedMode = !_isReducedMode;
+    [self.tableView reloadData];
+}
 
+#pragma mark - Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _dataArray.count;
@@ -63,8 +75,13 @@
     }
     NSDictionary *dict = _dataArray[indexPath.row];
     cell.textLabel.text = dict[@"name"];
-    cell.detailTextLabel.text = dict[@"sql"];
-    cell.detailTextLabel.numberOfLines = 0;
+    if (_isReducedMode) {
+        cell.detailTextLabel.text = @"";
+        cell.detailTextLabel.numberOfLines = 1;
+    }else{
+        cell.detailTextLabel.text = dict[@"sql"];
+        cell.detailTextLabel.numberOfLines = 0;
+    }
     return cell;
 }
 
@@ -93,12 +110,52 @@
     label.textColor = [UIColor redColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.backgroundColor = [UIColor lightGrayColor];
-    label.text = [_dataManager getDBSize];
+    label.text = [NSString stringWithFormat:@"size:%@ tables:%@", [_dataManager getDBSize], @(_dataArray.count)];
     return label;
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete table data
+        _delIndexPath = indexPath;
+        NSDictionary *dict = _dataArray[indexPath.row];
+
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:[NSString stringWithFormat:@"Are sure dellete table [%@] cache data?", dict[@"name"]] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
+#pragma clang diagnostic pop
+
+}
+
+#pragma makr - UIAlertViewDelegate
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        // OK
+        if (_delIndexPath) {
+            NSDictionary *dict = _dataArray[_delIndexPath.row];
+            [_dataManager deleteTableCacheWihtName:dict[@"name"]];
+        }
+    }
+}
+#pragma clang diagnostic pop
+
 - (CGFloat)getHeightWithIndexPath:(NSIndexPath *)indexPath
 {
+    if (_isReducedMode) {
+        return 44;
+    }
+    
     CGFloat rowHeight = 0;
     NSDictionary *dict = _dataArray[indexPath.row];
     NSString *tableName = dict[@"name"];

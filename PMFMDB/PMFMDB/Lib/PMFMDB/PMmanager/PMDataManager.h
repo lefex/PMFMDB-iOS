@@ -32,5 +32,7 @@
 
 - (NSString *)sqlIsValid:(NSString *)sql;
 
+- (void)deleteTableCacheWihtName:(NSString *)name;
+
 
 @end

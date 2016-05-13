@@ -47,7 +47,7 @@
              *  This is not user, if you want to test PMFMDB, you can create 
              *  tables and test it
              */
-//            [self createTbale];
+            [self createTbale];
         }
     }
     return self;
@@ -199,6 +199,13 @@
     }else{
         return nil;
     }
+}
+
+- (void)deleteTableCacheWihtName:(NSString *)name
+{
+    [_dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@", name]];
+    }];
 }
 
 /**
