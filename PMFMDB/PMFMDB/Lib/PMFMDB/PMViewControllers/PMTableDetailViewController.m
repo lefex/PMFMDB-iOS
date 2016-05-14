@@ -141,12 +141,10 @@
 {
     CGFloat height = 44;
     CGFloat topY = 0;
-    if (CGRectGetMinY(self.view.frame) == 20) {
-        topY = 44;
-    }else if (CGRectGetMinY(self.view.frame) == 64){
-        topY = 0;
-    }else if (CGRectGetMinY(self.view.frame) == 0){
+    if (self.navigationController.navigationBar.isTranslucent) {
         topY = 64;
+    }else{
+        topY = 0;
     }
     UIImageView *bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, topY, CGRectGetWidth(self.view.frame), height)];
     bgView.backgroundColor = [UIColor whiteColor];
