@@ -34,5 +34,7 @@
 
 - (void)deleteTableCacheWihtName:(NSString *)name;
 
+- (void)deleteAllTables;
+
 
 @end

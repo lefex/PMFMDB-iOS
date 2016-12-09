@@ -11,6 +11,7 @@
 #import "PMCSVFileViewController.h"
 #import "PMSQLViewController.h"
 #import "PMConfigure.h"
+#import "PMDataManager.h"
 
 @interface PMMainViewController ()
 
@@ -47,9 +48,10 @@
     
     _dataArray = @[@"All tables",
                    @"Execute SQL",
-                   @"The records that you searched"
+                   @"The records that you searched",
+                   @"Delete tables"
                    ];
-    _dataDescriptions = @[@"All the tables that in you database", @"You can execute SQL in your database what you like", @"The recodes that you have searched."];
+    _dataDescriptions = @[@"All the tables that in you database", @"You can execute SQL in your database what you like", @"The recodes that you have searched.", @"Clear all tables"];
     
 }
 
@@ -80,14 +82,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *className = self.classNames[indexPath.row];
-    if (className) {
-        Class class = NSClassFromString(className);
-        UIViewController *vc = class.new;
-        vc.title = _titles[indexPath.row];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    if (indexPath.row < self.classNames.count) {
+        NSString *className = self.classNames[indexPath.row];
+        if (className) {
+            Class class = NSClassFromString(className);
+            UIViewController *vc = class.new;
+            vc.title = _titles[indexPath.row];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    else{
+        // Delete all tables
+        PMDataManager *dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
+        [dataManager deleteAllTables];
+    }
+
 }
 
 @end

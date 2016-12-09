@@ -208,6 +208,17 @@
     }];
 }
 
+- (void)deleteAllTables
+{
+    NSArray *tableNames = [self getAllTables];
+    for (NSDictionary *dict in tableNames) {
+        NSString *tableName = dict[@"name"];
+        [_dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+            [db executeUpdate:[NSString stringWithFormat:@"DROP TABLE %@", tableName]];
+        }];
+    }
+}
+
 /**
  *  create table if you want to test FMFMDB
  */
