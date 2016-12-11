@@ -23,9 +23,9 @@ There is one main class in PMFMDB:
 
 ```objective-c
 PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
-  mainViewController.dataPath = [self messageDBPath];
-  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainViewController];
-  [self presentViewController:nav animated:YES completion:nil];
+mainViewController.dataPath = [self messageDBPath];
+UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+[self presentViewController:nav animated:YES completion:nil];
 ```
 
 ###All tables
@@ -81,9 +81,9 @@ PMFMDB一个基于FMDB分装的一个数据库工具，如果你想实时的查�
 
 ```objective-c
 PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
-  mainViewController.dataPath = [self messageDBPath];
-  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainViewController];
-  [self presentViewController:nav animated:YES completion:nil];
+mainViewController.dataPath = [self messageDBPath];
+UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+[self presentViewController:nav animated:YES completion:nil];
 // 你可以自己定义一个按钮，点击按钮的时候执行这端代码
 ```
 
