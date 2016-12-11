@@ -27,7 +27,8 @@
     PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
     // You must assign you DB path to the PMMainViewController
     mainViewController.dataPath = [self messageDBPath];
-    [self.navigationController pushViewController:mainViewController animated:YES];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 // The DB path

@@ -12,7 +12,8 @@
  *
  *  PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
  *  mainViewController.dataPath = [self messageDBPath];
- *  [self.navigationController pushViewController:mainViewController animated:YES];
+ *  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+ * [self presentViewController:nav animated:YES completion:nil];
  *
  *  If you want to execute SQL in you DB, you can select a templete SQL or
  *  input you SQL in plist file PMExecuteSql.plist

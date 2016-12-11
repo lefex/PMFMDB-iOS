@@ -32,6 +32,13 @@
 
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self _configureMainVCData];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didClickCancelItem)];
+}
+
+- (void)didClickCancelItem
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)_addTitle:(NSString *)title className:(NSString *)name
@@ -95,8 +102,15 @@
     }
     else{
         // Delete all tables
-        PMDataManager *dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
-        [dataManager deleteAllTables];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure you want to delete all tables?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            PMDataManager *dataManager = [PMDataManager dataBaseWithDbpath:[[NSUserDefaults standardUserDefaults] objectForKey:kPMDbpathKey]];
+            [dataManager deleteAllTables];
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 
 }
