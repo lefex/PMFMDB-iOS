@@ -20,7 +20,9 @@ This used FMDB. If you have FMDB in you project, you should not include it when 
 There is one main class in PMFMDB:
 * `PMMainViewController`- The main view controller that you will present.<br>
 </br>
-```objective-cPMMainViewController *mainViewController = [[PMMainViewController alloc] init];
+
+```objective-c
+PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
   mainViewController.dataPath = [self messageDBPath];
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainViewController];
   [self presentViewController:nav animated:YES completion:nil];
@@ -76,6 +78,7 @@ PMFMDB一个基于FMDB分装的一个数据库工具，如果你想实时的查�
 在PMFMDB主要有一个类:
 * `PMMainViewController`- 你将要展示的主要的视图控制器. <br>
 </br>
+
 ```objective-c
 PMMainViewController *mainViewController = [[PMMainViewController alloc] init];
   mainViewController.dataPath = [self messageDBPath];
