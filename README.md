@@ -105,9 +105,5 @@ UINavigationController *nav = [[UINavigationController alloc] initWithRootViewCo
 * 点击每一项可以预览查询结果
 * 点击导航右上角的按钮即可清除所有的查询记录.
 
-###截图
-
-<pre>![](https://github.com/wsyxyxs/PMFMDB-iOS/raw/master/PMFMDB/PMFMDB/pmfmdb.png)</pre>
-
 ###支持
 如果你有任何问题可以发邮件给我(`wsyxyxs@126.com`).
